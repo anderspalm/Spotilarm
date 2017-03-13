@@ -1,0 +1,50 @@
+<resources>
+    <string name="app_name">Spotilarm</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="snooze_for_time_message">Snooze Time</string>
+    <string name="set_message">Set Message</string>
+    <string name="set_time">Set Time</string>
+    <string name="set_music">Set Music</string>
+    <string name="alarm_page_title">ALARMS</string>
+    <string name="playlist"> playlist</string>
+    <string name="song_numbers"> songs</string>
+    <string name="song_number"> song</string>
+
+    <string name="new_alarm">New Alarm</string>
+
+    <string name="set_title">SET TITLE</string>
+    <string name="to_spotify_playlists">S. Playlists</string>
+    <string name="to_song_search">Find Songs</string>
+    <string name="saved_playlists">Saved Playlists</string>
+    <string name="set_title_hint">New Playlist Title</string>
+
+    <string name="set">Set</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+
+    <string name="stop">Stop</string>
+    <string name="snooze">Snooze</string>
+
+    <string name="song_search_title">Create Your Playlist</string>
+    <string name="spotify_playlist_search_title">Your Spotify Playlists</string>
+    <string name="insert_message">Insert message here</string>
+    <string name="minutes">minutes</string>
+    <string name="minute">minute</string>
+    <string name="close_results">Close Results</string>
+    <string name="create_playlist">Create a Playlist</string>
+
+    <string name="monday_new_alarm">m</string>
+    <string name="tuesday_new_alarm">t</string>
+    <string name="wednseday_new_alarm">w</string>
+    <string name="thursday_new_alarm">t</string>
+    <string name="friday_new_alarm">f</string>
+    <string name="saturday_new_alarm">s</string>
+    <string name="sunday_new_alarm">s</string>
+    <string name="monday">Mo</string>
+    <string name="tuesday">Tu</string>
+    <string name="wednseday">We</string>
+    <string name="thursday">Th</string>
+    <string name="friday">Fr</string>
+    <string name="saturday">Sa</string>
+    <string name="sunday">Su</string>
+</resources>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryLight">
+
+    <ImageView
+        android:id="@+id/background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/alarm_clock"
+        android:layout_width="wrap_content"
+        android:layout_height="0px"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:src="@drawable/alarm_clock" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0px"
+        android:layout_weight=".2"
+        android:gravity="center"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2:22pm"
+            android:fontFamily="casual"
+            android:textColor="@color/white"
+            android:textAlignment="center"
+            android:textSize="70sp" />
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:layout_gravity="center"
+            android:text="20/12/2016"
+            android:fontFamily="casual"
+            android:textColor="@color/white"
+            android:textSize="@dimen/extraLarge" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/message_text"
+        android:layout_width="wrap_content"
+        android:layout_height="0px"
+        android:layout_weight="0.36"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:fontFamily="serif"
+        android:textColor="@color/white"
+        android:textSize="@dimen/extraLarge"
+        tools:text="m dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut in voluptate velit esse c" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:gravity="bottom"
+        android:layout_gravity="bottom">
+
+        <Button
+            android:id="@+id/stop"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight=".5"
+            android:background="@color/copperRed"
+            android:padding="0px"
+            android:text="@string/stop"
+            android:fontFamily="casual"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:textSize="@dimen/large" />
+
+        <Button
+            android:id="@+id/snooze"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight=".5"
+            android:background="#0077BE"
+            android:padding="0px"
+            android:text="@string/snooze"
+            android:fontFamily="casual"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:textSize="@dimen/large" />
+    </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>
