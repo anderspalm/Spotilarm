@@ -1,7 +1,6 @@
 package com.anders.spotifyalarm.MediaSearch;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
@@ -13,21 +12,16 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.anders.spotifyalarm.AlbumSearch.AlbumSearch;
-import com.anders.spotifyalarm.MediaSearch.songSearch.AlbumFragment;
 import com.anders.spotifyalarm.MediaSearch.songSearch.SearchFragment;
 import com.anders.spotifyalarm.MediaSearch.songSearch.SongObject;
 import com.anders.spotifyalarm.R;
 import com.anders.spotifyalarm.SingAndDB.DBhelper;
 import com.anders.spotifyalarm.SingAndDB.MasterSingleton;
-import com.anders.spotifyalarm.UiAids.PhotoTransformation;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.zip.Inflater;
 
 import static android.content.ContentValues.TAG;
 
@@ -100,11 +94,11 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.Contai
                             mPlayEditFrag.setVisibility(View.GONE);
                             if (arrayList.size() > 0) {
 //                              change database
-                                mDBhelper.deleteSpecificPlaylist(mPlaylists.get(getAdapterPosition()));
-                                mDBhelper.insertHistPlaylists(mMasterSingleton.getSongObjArray());
-                                for (int i = 0; i < mPlaylists.get(getAdapterPosition()).size(); i++) {
-                                    Log.i(TAG, "PlaylistAdapter: " + mPlaylists.get(getAdapterPosition()).get(i).getTitle());
-                                }
+//                                mDBhelper.deleteSpecificPlaylist(mPlaylists.get(getAdapterPosition()));
+//                                mDBhelper.insertHistPlaylists(mMasterSingleton.getSongObjArray());
+//                                for (int i = 0; i < mPlaylists.get(getAdapterPosition()).size(); i++) {
+//                                    Log.i(TAG, "PlaylistAdapter: " + mPlaylists.get(getAdapterPosition()).get(i).getTitle());
+//                                }
                                 mPlaylists.set(getAdapterPosition(), arrayList);
                                 notifyDataSetChanged();
                             } else {

@@ -3,23 +3,33 @@
     <color name="colorPrimary">#383d44</color>
     <color name="colorPrimaryLight">#717780</color>
     <color name="colorPrimaryLightTransparent">#99717780</color>
+    <color name="colorPrimaryTransparent">#20717780</color>
     <color name="Transparent">#00717780</color>
     <color name="colorPrimaryDark">#111214</color>
-    <color name="colorAccent">#00B64F</color>
-    <color name="navy">#0800af</color>
+    <color name="colorAccent">#fff</color>
+    <color name="green1">#00B64F</color>
+    <color name="white">#F1FAEE</color>
+    <color name="grey">#CBCBC9</color>
+    <!--<color name="blue1">#457B9D</color>-->
+    <color name="blue1">#457B9D</color>
+    <color name="blue2">#A8DADC</color>
+    <!--<color name="accent1">#6FFFBA</color>-->
+    <!--<color name="accent1">#0800af</color>-->
+    <color name="accent1">#ff8300</color>
+    <!--<color name="accent1">#C80815</color>-->
+    <!--<color name="accent1">#A17FFF</color>-->
 
-    <color name="listGreen">#6FFFBA</color>
-    <color name="accent1">#FF9EBF</color>
+
+
     <color name="accent2">#FF6B9D</color>
     <color name="accent3">#FF1262</color>
     <color name="accent4">#FE0055</color>
-    <color name="green1">#00B64F</color>
+    <color name="navy">#0800af</color>
+    <color name="listGreen">#36d98b</color>
     <color name="red">#ae0900</color>
     <color name="copperRed">#C80815</color>
     <color name="orange">#ffca6f</color>
     <color name="purple1">#A17FFF</color>
-    <color name="blue1">#0077BE</color>
-    <color name="white">#fff</color>
-    <color name="grey">#CBCBC9</color>
+    <color name="greyTransparent">#22CBCBC9</color>
     <color name="black">#000</color>
 </resources>

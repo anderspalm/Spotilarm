@@ -5,10 +5,10 @@ android {
     buildToolsVersion "25.0.0"
     defaultConfig {
         applicationId "com.anders.spotifyalarm"
-        minSdkVersion 21
+        minSdkVersion 22
         targetSdkVersion 25
-        versionCode 7
-        versionName "7.0"
+        versionCode 17
+        versionName "12"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -38,16 +38,15 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
-//    compile 'com.spotify.sdk:spotify-auth:beta23-noconnect-2.20b@aar'
+    //    compile 'com.spotify.sdk:spotify-auth:beta23-noconnect-2.20b@aar'
 //    compile 'com.spotify.sdk:spotify-player:beta23-noconnect-2.20b@aar'
 //    compile 'com.spotify.sdk:spotify-android-auth-1.0.0@aar'
-    compile ('com.github.ozodrukh:CircularReveal:2.0.1@aar') {
+    compile('com.github.ozodrukh:CircularReveal:2.0.1@aar') {
         transitive = true;
     }
 //    compile 'com.github.traex.rippleeffect:library:1.3'
 //    compile 'com.github.Hitta:RippleEffect:82cf00e551'
-    compile 'com.patrickpissurno:ripple-effect:1.3.1' // fixes crash on api 22
-    compile 'link.fls:swipestack:0.3.0'
+    // fixes crash on api 22
     compile 'com.spotify.sdk:spotify-player-24-noconnect-2.20b@aar'
     compile(name: 'spotify-android-auth-1.0.0', ext: 'aar')
 
@@ -61,6 +60,9 @@ dependencies {
 //    compile 'com.spotify.sdk:spotify-player-24-noconnect-2.20b@aar'
 
 
+    compile 'com.github.javiersantos:AppUpdater:2.5.1'
+    compile 'com.patrickpissurno:ripple-effect:1.3.1'
+    compile 'link.fls:swipestack:0.3.0'
     compile 'com.android.support:recyclerview-v7:25.1.1'
     compile 'com.android.volley:volley:1.0.0'
     compile 'com.android.support:cardview-v7:25.1.1'
@@ -71,5 +73,6 @@ dependencies {
     compile 'com.android.support:design:25.1.1'
     compile 'com.android.support.test.espresso:espresso-core:2.2.2'
     compile 'com.android.support:support-v4:25.1.1'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
 }

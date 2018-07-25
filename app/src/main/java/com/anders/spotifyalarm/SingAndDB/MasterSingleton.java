@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.anders.spotifyalarm.AlarmTrigger.AlarmObject;
 import com.anders.spotifyalarm.MediaSearch.songSearch.SongObject;
+import com.spotify.sdk.android.player.SpotifyPlayer;
 
 import java.util.ArrayList;
 
@@ -14,6 +15,51 @@ public class MasterSingleton {
 
     ArrayList<SongObject> songObjectArray;
     String mUserId = "0";
+    int mTimeGrad = 0;
+    int mTimeTaken = 0;
+    int originalVolume = 0;
+    String playlistTitle = "";
+    SpotifyPlayer mCurrentPlaylistPlayer;
+
+    public SpotifyPlayer getmCurrentPlaylistPlayer() {
+        return mCurrentPlaylistPlayer;
+    }
+
+    public void setmCurrentPlaylistPlayer(SpotifyPlayer mCurrentPlaylistPlayer) {
+        this.mCurrentPlaylistPlayer = mCurrentPlaylistPlayer;
+    }
+
+    public String getPlaylistTitle() {
+        return playlistTitle;
+    }
+
+    public void setPlaylistTitle(String playlistTitle) {
+        this.playlistTitle = playlistTitle;
+    }
+
+    public int getOriginalVolume() {
+        return originalVolume;
+    }
+
+    public void setOriginalVolume(int originalVolume) {
+        this.originalVolume = originalVolume;
+    }
+
+    public int getmTimeGrad() {
+        return mTimeGrad;
+    }
+
+    public void setmTimeGrad(int mTimeGrad) {
+        this.mTimeGrad = mTimeGrad;
+    }
+
+    public int getmTimeTaken() {
+        return mTimeTaken;
+    }
+
+    public void setmTimeTaken(int mTimeTaken) {
+        this.mTimeTaken = mTimeTaken;
+    }
 
     public static MasterSingleton getmInstance() {
         if (mInstance == null) {

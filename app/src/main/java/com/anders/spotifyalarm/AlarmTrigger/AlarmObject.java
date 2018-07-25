@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class AlarmObject implements Serializable{
 
     Integer mHour, mMinute, mSnooze, mAlarmId, mDay, mIndex;
-    String mMessage;
+    String mMessage, mSetmChecked;
 
     public AlarmObject(Integer hour, int minute, int snooze, int alarmId, int dayId, String message) {
         mHour = hour; mMinute = minute; mSnooze = snooze;
@@ -21,6 +21,25 @@ public class AlarmObject implements Serializable{
         mHour = hour; mMinute = minute; mSnooze = snooze;
         mAlarmId = alarmId; mDay = dayId; mMessage = message;
         mIndex = index;
+    }
+
+    public AlarmObject(Integer mHour, Integer mMinute, Integer mSnooze, Integer mAlarmId, Integer mDay, Integer mIndex, String mMessage, String mSetmChecked) {
+        this.mHour = mHour;
+        this.mMinute = mMinute;
+        this.mSnooze = mSnooze;
+        this.mAlarmId = mAlarmId;
+        this.mDay = mDay;
+        this.mIndex = mIndex;
+        this.mMessage = mMessage;
+        this.mSetmChecked = mSetmChecked;
+    }
+
+    public String getmChecked() {
+        return mSetmChecked;
+    }
+
+    public void setmChecked(String mSetmChecked) {
+        this.mSetmChecked = mSetmChecked;
     }
 
     public Integer getmIndex() {

@@ -4,9 +4,11 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="icon">120px</dimen>
+    <dimen name="titleLarge">36sp</dimen>
     <dimen name="extraExtraLarge">26sp</dimen>
     <dimen name="extraLarge">21sp</dimen>
     <dimen name="large">18sp</dimen>
     <dimen name="normal">16sp</dimen>
     <dimen name="small">14sp</dimen>
+    <dimen name="evenSmaller">12dp</dimen>
 </resources>

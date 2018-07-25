@@ -2,6 +2,7 @@ package com.anders.spotifyalarm.SingAndDB;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -14,6 +15,7 @@ import com.anders.spotifyalarm.AlarmTrigger.AlarmObject;
 import com.anders.spotifyalarm.MediaSearch.songSearch.SongObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  * Created by anders on 1/27/2017.
@@ -25,9 +27,10 @@ public class DBhelper extends SQLiteOpenHelper {
     public static DBhelper mInstance;
     ArrayList<AlarmObject> mCombinedAlarmArray;
     private int id;
+    static Context mContext;
 
     public static final String DATABASE_NAME = "SpotifyAlarm.db";
-    public static final Integer DATABASE_VERSION = 36;
+    public static final Integer DATABASE_VERSION = 42;
     private static final String TAG = "DBhelper";
 
     //    ALARM TABLE - MASTER
@@ -36,10 +39,18 @@ public class DBhelper extends SQLiteOpenHelper {
     public static final String MINUTE = "minute";
     public static final String MESSAGE = "message";
     public static final String SNOOZETIME = "snooze_time";
+    public static final String GRADUAL = "gradual";
+    public static final String SHUFFLE = "shuffle";
     public static final String ALARM_ID = "alarm_id";
     public static final String ITEM_ID = "item_id";
+    public static final String ALIVE = "alive";
     public static final String DAY = "day";
     public static final String ALARM_SONG = "song";
+
+    //    ALARM SPECS TABLE
+    public static final String ALARM_SPECS_TABLE = "alarm_specs_table";
+    public static final String VIBRATE = "vibrate";
+    public static final String GRADUALWAKE = "gradual_wake";
 
     //    DATE TABLE - NESTED
     public static final String SONG_TABLE = "song_table";
@@ -71,7 +82,9 @@ public class DBhelper extends SQLiteOpenHelper {
     public static DBhelper getmInstance(Context context) {
         if (mInstance == null) {
             mInstance = new DBhelper(context);
+        } else {
         }
+        mContext = context;
         return mInstance;
     }
 
@@ -83,17 +96,28 @@ public class DBhelper extends SQLiteOpenHelper {
 
         mCombinedAlarmArray = new ArrayList<>();
 
+        //    ALARM TABLE
         sqLiteDatabase.execSQL(
                 "CREATE TABLE " + ALARM_TABLE + " ("
                         + ITEM_ID + " INTEGER PRIMARY KEY, "
                         + HOUR + " INTEGER, "
                         + MINUTE + " INTEGER, "
                         + DAY + " INTEGER, "
+                        + SHUFFLE + " INTEGER, "
                         + MESSAGE + " TEXT, "
+                        + GRADUAL + " INTEGER, "
+                        + ALIVE + " TEXT, "
                         + SNOOZETIME + " INTEGER, "
                         + ALARM_SONG + " TEXT, "
                         + ALARM_ID + " INTEGER NOT NULL )");
 
+        //    ALARM SPECS TABLE
+        sqLiteDatabase.execSQL(
+                "CREATE TABLE " + ALARM_SPECS_TABLE + " ("
+                        + VIBRATE + " TEXT, "
+                        + GRADUALWAKE + " TEXT)");
+
+        //    ALARM SONG TABLE
         sqLiteDatabase.execSQL(
                 "CREATE TABLE " + SONG_TABLE + " ("
                         + SONGURI + " TEXT, "
@@ -106,12 +130,13 @@ public class DBhelper extends SQLiteOpenHelper {
                         + ALARM_ID + " INTEGER NOT NULL, "
                         + "FOREIGN KEY(" + ALARM_ID + ") REFERENCES " + ALARM_TABLE + "(" + ALARM_ID + "))");
 
-
+        //    ALARM HIST TABLE
         sqLiteDatabase.execSQL(
                 "CREATE TABLE " + HIST_PLAYLIST_TABLE + " ("
                         + HIST_PLAYLIST_ID + " INTEGER PRIMARY KEY, "
                         + HIST_PLAYLIST + " TEXT )");
 
+        //    ALARM SONG HIST TABLE
         sqLiteDatabase.execSQL(
                 "CREATE TABLE " + HIST_SONG_TABLE + " ("
                         + HIST_SONG_URI + " TEXT, "
@@ -126,10 +151,262 @@ public class DBhelper extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + ALARM_TABLE);
-        onCreate(sqLiteDatabase);
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        if (newVersion > oldVersion) {
+            switch (oldVersion) {
+                case 40:
+                    db.execSQL("ALTER TABLE " + ALARM_TABLE + " ADD COLUMN " + SHUFFLE + " INTEGER DEFAULT 0");
+            }
+        }
     }
+
+    public void setSettingsOnCreate() {
+        SQLiteDatabase db = getWritableDatabase();
+        SettingsObject obj = new SettingsObject("oui", "non1");
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(GRADUALWAKE, obj.getmGradual());
+        contentValues.put(VIBRATE, obj.getmVibrate());
+        db.insert(ALARM_SPECS_TABLE, null, contentValues);
+        db.close();
+    }
+
+    public void setGradualwakeBoolean(String newTimeAndBoolean) {
+
+        String vibrate = "aaa1";
+        SQLiteDatabase findDB = getReadableDatabase();
+        Cursor cursor = findDB.rawQuery("SELECT * FROM " + ALARM_SPECS_TABLE, null);
+        if (cursor.moveToFirst()) {
+            while (!cursor.isAfterLast()) {
+                vibrate = cursor.getString(cursor.getColumnIndex(VIBRATE));
+                cursor.moveToNext();
+            }
+        } else {
+        }
+        findDB.close();
+
+
+        SQLiteDatabase db2 = getWritableDatabase();
+        db2.execSQL("delete from "+ ALARM_SPECS_TABLE);
+        db2.close();
+
+
+        SQLiteDatabase db3 = getWritableDatabase();
+        SettingsObject obj = new SettingsObject(vibrate, newTimeAndBoolean);
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(GRADUALWAKE, obj.getmGradual());
+        contentValues.put(VIBRATE, obj.getmVibrate());
+        db3.insert(ALARM_SPECS_TABLE, null, contentValues);
+        db3.close();
+
+    }
+
+
+    public void setVibrate(String vibrate) {
+
+
+        String gradual = "aaa1";
+        SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM " + ALARM_SPECS_TABLE, null);
+        if (cursor.moveToFirst()) {
+            while (!cursor.isAfterLast()) {
+                gradual = cursor.getString(cursor.getColumnIndex(GRADUALWAKE));
+                cursor.moveToNext();
+            }
+        } else {
+        }
+        sqLiteDatabase.close();
+
+
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("delete from "+ ALARM_SPECS_TABLE);
+        db.close();
+
+
+        SQLiteDatabase db3 = getWritableDatabase();
+        SettingsObject obj = new SettingsObject(vibrate, gradual);
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(GRADUALWAKE, obj.getmGradual());
+        contentValues.put(VIBRATE, obj.getmVibrate());
+        db3.insert(ALARM_SPECS_TABLE, null, contentValues);
+        db3.close();
+
+    }
+
+    public String getGradualWakeup() {
+//        get the only row
+        String original = "aaa170";
+        SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT " + GRADUALWAKE + " FROM " + ALARM_SPECS_TABLE, null);
+        if (cursor.moveToFirst()) {
+            while (!cursor.isAfterLast()) {
+                original = cursor.getString(cursor.getColumnIndex(GRADUALWAKE));
+                cursor.moveToNext();
+            }
+        } else {
+        }
+        sqLiteDatabase.close();
+        return original;
+    }
+
+    public String getVibrate() {
+//        get vibrate
+        String original = "non";
+        SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT " + VIBRATE + " FROM " + ALARM_SPECS_TABLE, null);
+        if (cursor.moveToFirst()) {
+            while (!cursor.isAfterLast()) {
+                original = cursor.getString(cursor.getColumnIndex(VIBRATE));
+                cursor.moveToNext();
+            }
+        } else {
+        }
+        sqLiteDatabase.close();
+        return original;
+    }
+
+
+
+    public void resetAlarmsForGradualWake(Context context){
+        SQLiteDatabase db1 = getReadableDatabase();
+        ArrayList<AlarmObject> arrayList = new ArrayList<>();
+
+//        FIRST I MUST FIND ALL THE UNIQUE ALARM ID
+        Cursor cursor = db1.rawQuery("SELECT * FROM " + ALARM_TABLE, null);
+        if (cursor.moveToFirst()) {
+            while (!cursor.isAfterLast()) {
+                int uniqueId = cursor.getInt(cursor.getColumnIndex(ITEM_ID));
+                int day = cursor.getInt(cursor.getColumnIndex(DAY));
+                int hour = cursor.getInt(cursor.getColumnIndex(HOUR));
+                int minute = cursor.getInt(cursor.getColumnIndex(MINUTE));
+                int snooze = cursor.getInt(cursor.getColumnIndex(SNOOZETIME));
+                int alarm_id = cursor.getInt(cursor.getColumnIndex(ALARM_ID));
+                String message = cursor.getString(cursor.getColumnIndex(MESSAGE));
+                String checked = cursor.getString(cursor.getColumnIndex(ALIVE));
+                arrayList.add(new AlarmObject(hour,minute,snooze,alarm_id,day,uniqueId,message,checked));
+                cursor.moveToNext();
+            }
+        } else {}
+        db1.close();
+
+
+        for (int i = 0; i < arrayList.size(); i++) {
+            AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+            Intent intent = new Intent(context, AlarmBroadcastReceiver.class);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, arrayList.get(i).getmIndex(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            alarmManager.cancel(pendingIntent);
+            pendingIntent.cancel();
+        }
+
+        for (int j = 0; j < arrayList.size(); j ++){
+
+            int minOriginal = arrayList.get(j).getmMinute();
+            int hour = arrayList.get(j).getmHour();
+            int day = arrayList.get(j).getmDay();
+            Log.i(TAG, "resetAlarmsForEarlyWake 1: " + minOriginal);
+            Log.i(TAG, "resetAlarmsForEarlyWake 1: " + hour);
+            Log.i(TAG, "resetAlarmsForEarlyWake 1: " + day);
+
+            Calendar mCalendara = Calendar.getInstance();
+            mCalendara.setTimeInMillis(System.currentTimeMillis());
+            mCalendara.set(Calendar.DAY_OF_WEEK, day);
+            mCalendara.set(Calendar.HOUR_OF_DAY, hour);
+            mCalendara.set(Calendar.MINUTE, minOriginal);
+            mCalendara.set(Calendar.SECOND, 0);
+            mCalendara.set(Calendar.MILLISECOND, 0);
+
+            String grad = getGradualWakeup();
+            grad = grad.substring(3,4);
+            int minPadding = Integer.parseInt(grad);
+
+            Log.i(TAG, "resetAlarmsForEarlyWake: before " + mCalendara.getTime());
+
+            if (minOriginal < minPadding){
+                minOriginal = (minOriginal - minPadding) + 60;
+                if (hour == 0){
+                    hour = 23;
+                    if (day == 1) {
+                        day = 7;
+                    } else {
+                        day = day - 1;
+                    }
+                } else {
+                    hour = hour - 1;
+                }
+            } else if(minOriginal > (60 - minPadding)){
+                minOriginal = (minOriginal + minPadding) - 60;
+                if (hour == 23 ){
+                    hour = 1;
+                    if (day == 7) {
+                        day = 1;
+                    } else {
+                        day = day + 1;
+                    }
+                } else {
+                    hour = hour + 1;
+                }
+            } else {
+                minOriginal = minOriginal - minPadding;
+            }
+
+            Log.i(TAG, "resetAlarmsForEarlyWake 2: " + minPadding);
+            Log.i(TAG, "resetAlarmsForEarlyWake 2: " + minOriginal);
+            Log.i(TAG, "resetAlarmsForEarlyWake 2: " + hour);
+            Log.i(TAG, "resetAlarmsForEarlyWake 2: " + day);
+
+
+            Intent intent = new Intent(context, AlarmBroadcastReceiver.class);
+            Calendar mCalendar = Calendar.getInstance();
+            mCalendar.setTimeInMillis(System.currentTimeMillis());
+            long timeInMillis = mCalendar.getTimeInMillis();
+            mCalendar.set(Calendar.DAY_OF_WEEK, day);
+            mCalendar.set(Calendar.HOUR_OF_DAY, hour);
+            mCalendar.set(Calendar.MINUTE, minOriginal);
+            mCalendar.set(Calendar.SECOND, 0);
+            mCalendar.set(Calendar.MILLISECOND, 0);
+
+            intent.putExtra("hour", hour);
+            intent.putExtra("minute", minOriginal);
+            intent.putExtra("day", day);
+            intent.putExtra("unique_code", arrayList.get(j).getmIndex());
+            intent.putExtra("alarm_id_primary_table", arrayList.get(j).getmAlarmId());
+            intent.putExtra("snooze", arrayList.get(j).getmSnooze());
+            intent.putExtra("message", arrayList.get(j).getmMessage());
+
+            Log.i(TAG, "resetAlarmsForEarlyWake: after adjusted " + mCalendar.getTimeInMillis());
+
+            Log.i(TAG, "resetAlarmsForEarlyWake: after right now " + timeInMillis);
+
+            if ((timeInMillis) < mCalendar.getTimeInMillis()) {
+
+                Log.i(TAG, "resetAlarmsForEarlyWake: after " + mCalendar.getTime());
+
+//        set pending intent
+                AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+                PendingIntent reinstatePendingIntent = PendingIntent.getBroadcast(context,
+                        arrayList.get(j).getmIndex(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+//        add everything to the alarm manager and start the receiver wait operation
+                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, mCalendar.getTimeInMillis(),
+                        AlarmManager.INTERVAL_DAY * 7, reinstatePendingIntent);
+            } else {
+                int weekInMillis = (60000 * 60 * 24 * 7);
+                mCalendar.setTimeInMillis(mCalendar.getTimeInMillis() + weekInMillis);
+
+                Log.i(TAG, "resetAlarmsForEarlyWake: after one week " + mCalendar.getTime());
+
+//        set pending intent
+                AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+                PendingIntent reinstatePendingIntent = PendingIntent.getBroadcast(context,
+                        arrayList.get(j).getmIndex(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+//        add everything to the alarm manager and start the receiver wait operation
+                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, mCalendar.getTimeInMillis(),
+                        AlarmManager.INTERVAL_DAY * 7, reinstatePendingIntent);
+            }
+        }
+    }
+
+
+
+
 
     public int getAlarmItemId(int alarmId, int day) {
         SQLiteDatabase db = getReadableDatabase();
@@ -187,81 +464,20 @@ public class DBhelper extends SQLiteOpenHelper {
         removeSongs(alarm_id);
     }
 
-    public void removeAndCancelSpecificAlarm(Integer day_id, Context context) {
-        SQLiteDatabase db1 = getReadableDatabase();
-        Cursor cursor = db1.rawQuery("SELECT * FROM " + ALARM_TABLE + " WHERE " + ITEM_ID + " = " + day_id, null);
-        ArrayList<Integer> arrayList = new ArrayList<>();
+
+    public int getShuffle(int alarm_id){
+        int temp = 0;
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + ALARM_TABLE + " WHERE " + ALARM_ID + " = " + alarm_id, null);
         if (cursor.moveToFirst()) {
             while (!cursor.isAfterLast()) {
-                int uniqueIdentifier = cursor.getInt(cursor.getColumnIndex(ITEM_ID));
-                arrayList.add(uniqueIdentifier);
+                temp = cursor.getInt(cursor.getColumnIndex(SHUFFLE));
                 cursor.moveToNext();
             }
-        } else {
-//            Log.i(TAG, "removeAndCancelAlarm: ");
-        }
-
-        db1.close();
-
-        SQLiteDatabase db = getWritableDatabase();
-        db.execSQL("DELETE FROM " + ALARM_TABLE + " WHERE " + ITEM_ID + " = " + day_id);
+        } else {}
         db.close();
-
-        for (int i = 0; i < arrayList.size(); i++) {
-            AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-            Intent intent = new Intent(context, AlarmBroadcastReceiver.class);
-//            Log.i(TAG, "cancelAlarm: identifyingCode = " + arrayList.get(i));
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, arrayList.get(i), intent, PendingIntent.FLAG_UPDATE_CURRENT);
-            alarmManager.cancel(pendingIntent);
-            pendingIntent.cancel();
-//            Log.i(TAG, "cancelAlarm: cancelled");
-        }
-
+        return temp;
     }
-
-    public int findSnooze(int alarm_id, int day) {
-        SQLiteDatabase db = getReadableDatabase();
-        int snooze = 30000;
-        Cursor cursor = db.rawQuery("SELECT * FROM " + ALARM_TABLE + " WHERE " + ALARM_ID + " = " + alarm_id + " AND " + DAY + " = " + day, null);
-        if (cursor.moveToFirst()) {
-            while (!cursor.isAfterLast()) {
-                snooze = cursor.getInt(cursor.getColumnIndex(SNOOZETIME));
-            }
-        } else {
-//            Log.i(TAG, "findSnooze: ");
-        }
-//        Log.i(TAG, "findSnooze: " + snooze);
-        cursor.close();
-        db.close();
-        return snooze;
-    }
-
-
-    public ArrayList<AlarmObject> getAllAlarmsByDay(int day) {
-        ArrayList<AlarmObject> arrayList = new ArrayList<>();
-        AlarmObject alarmObject = new AlarmObject();
-        SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM " + ALARM_TABLE + " WHERE " + DAY + " = " + day, null);
-
-        if (cursor.moveToFirst()) {
-            while (!cursor.isAfterLast()) {
-                alarmObject.setmHour(cursor.getInt(cursor.getColumnIndex(HOUR)));
-                alarmObject.setmMinute(cursor.getInt(cursor.getColumnIndex(MINUTE)));
-                alarmObject.setmSnooze(cursor.getInt(cursor.getColumnIndex(SNOOZETIME)));
-                alarmObject.setmAlarmId(cursor.getInt(cursor.getColumnIndex(ALARM_ID)));
-                alarmObject.setmDay(cursor.getInt(cursor.getColumnIndex(DAY)));
-                alarmObject.setmMessage(cursor.getString(cursor.getColumnIndex(MESSAGE)));
-                arrayList.add(alarmObject);
-                cursor.moveToNext();
-            }
-        } else {
-//            Log.i(TAG, "getAllAlarmsByDay: ");
-        }
-        db.close();
-        cursor.close();
-        return arrayList;
-    }
-
 
     public ArrayList<ArrayList<AlarmObject>> getAllAlarms() {
         SQLiteDatabase dbR = getReadableDatabase();
@@ -303,6 +519,7 @@ public class DBhelper extends SQLiteOpenHelper {
                     alarmObject.setmSnooze(nested.getInt(nested.getColumnIndex(SNOOZETIME)));
                     alarmObject.setmAlarmId(nested.getInt(nested.getColumnIndex(ALARM_ID)));
                     alarmObject.setmDay(nested.getInt(nested.getColumnIndex(DAY)));
+                    alarmObject.setmChecked(nested.getString(nested.getColumnIndex(ALIVE)));
                     alarmObject.setmMessage(nested.getString(nested.getColumnIndex(MESSAGE)));
                     alarmObject.setmIndex(nested.getInt(nested.getColumnIndex(ITEM_ID)));
                     arrayList.add(alarmObject);
@@ -323,7 +540,51 @@ public class DBhelper extends SQLiteOpenHelper {
     }
 
 
+    public String isAlive(int alarm_id) {
+        SQLiteDatabase db = getReadableDatabase();
+        String checked = "";
+        Cursor cursor = db.rawQuery("SELECT * FROM " + ALARM_TABLE + " WHERE " + ALARM_ID + " = " + alarm_id, null);
+        if (cursor.moveToFirst()) {
+            while (!cursor.isAfterLast()) {
+                checked = cursor.getString(cursor.getColumnIndex(ALIVE));
+                cursor.moveToNext();
+            }
+        }
+        db.close();
+        return checked;
+    }
 
+    public void removeCheck(String remove, int alarm_id) {
+
+        SQLiteDatabase db = getWritableDatabase();
+        SQLiteDatabase db2 = getReadableDatabase();
+        String checked = "";
+        if (remove.equals("yes")) {
+            db.execSQL("UPDATE " + ALARM_TABLE + " SET " + ALIVE + " = " + "'false'" + " WHERE " + ALARM_ID + " = " + alarm_id);
+            Cursor cursor = db2.rawQuery("SELECT * FROM " + ALARM_TABLE + " WHERE " + ALARM_ID + " = " + alarm_id, null);
+            if (cursor.moveToFirst()) {
+                while (!cursor.isAfterLast()) {
+                    checked = cursor.getString(cursor.getColumnIndex(ALIVE));
+                    cursor.moveToNext();
+                }
+            } else {
+            }
+            Log.i(TAG, "removeCheck: " + checked);
+        } else {
+            db.execSQL("UPDATE " + ALARM_TABLE + " SET " + ALIVE + " = " + "'true'" + " WHERE " + ALARM_ID + " = " + alarm_id);
+            Cursor cursor = db2.rawQuery("SELECT * FROM " + ALARM_TABLE + " WHERE " + ALARM_ID + " = " + alarm_id, null);
+            if (cursor.moveToFirst()) {
+                while (!cursor.isAfterLast()) {
+                    checked = cursor.getString(cursor.getColumnIndex(ALIVE));
+                    cursor.moveToNext();
+                }
+            } else {
+            }
+            Log.i(TAG, "removeCheck: " + checked);
+        }
+        db2.close();
+        db.close();
+    }
 
 
     public ArrayList<AlarmObject> findDailyAlarms(int day) {
@@ -353,30 +614,56 @@ public class DBhelper extends SQLiteOpenHelper {
         return arraylist;
     }
 
-    public void deleteSongsById(int alarm_id){
+    public void deleteSongsById(int alarm_id) {
         SQLiteDatabase db = getWritableDatabase();
 
         db.execSQL(" DELETE FROM " + SONG_TABLE + " WHERE " + ALARM_ID + " = " + alarm_id);
         db.close();
     }
 
+    public int isShuffle(int alarm_id){
+        SQLiteDatabase db = getReadableDatabase();
+        int value = 0;
+        Cursor cursor = db.rawQuery("SELECT * FROM " + ALARM_TABLE + " WHERE " + ALARM_ID + " = " + alarm_id, null);
+        if (cursor.moveToFirst()){
+            while (!cursor.isAfterLast()){
+                value = cursor.getInt(cursor.getColumnIndex(SHUFFLE));
+                cursor.moveToNext();
+            }
+        } else {}
+        cursor.close();
+        db.close();
+        return value;
+    }
 
-    public void insertAlarms(AlarmObject alarmObj, ArrayList<SongObject> songObj, int alarm_id) {
+    public void updateShuffle(int alarm_id, String onOrOff){
+        int value = 0;
+        if (onOrOff.equals("off")){
+            value = 0;
+        } else {
+            value = 1;
+        }
+
         SQLiteDatabase db = getWritableDatabase();
-        String message = alarmObj.getmMessage().replace("'", "`");
-        db.execSQL("INSERT INTO " + ALARM_TABLE
-                + " (" + HOUR + ", " + MINUTE + ", " + DAY + ", " + MESSAGE + ", " + SNOOZETIME + ", " + ALARM_ID + ") "
-                + " VALUES (" + alarmObj.getmHour() + ", " + alarmObj.getmMinute() + ", "
-                + alarmObj.getmDay() + ", " + "'" + message + "'" + ", " + alarmObj.getmSnooze() + ", " + alarm_id + ")");
-
-        String playlist = "";
-//
-//        db.execSQL(" DELETE FROM " + SONG_TABLE + " WHERE " + ALARM_ID + " = " + alarmObj.getmAlarmId());
-//        db.close();
+        Cursor cursor = db.rawQuery("UPDATE " + ALARM_TABLE + " SET " + SHUFFLE + "=" + value
+                + " WHERE " + ALARM_ID + " = " + alarm_id, null);
+        if (cursor.moveToFirst()){}
+        cursor.close();
+        db.close();
     }
 
 
-    public void insertSongs(int alarmId, ArrayList<SongObject> songObj){
+    public void insertAlarms(AlarmObject alarmObj, ArrayList<SongObject> songObj, int alarm_id, int shuffle) {
+        SQLiteDatabase db = getWritableDatabase();
+        String message = alarmObj.getmMessage().replace("'", "`");
+        db.execSQL("INSERT INTO " + ALARM_TABLE
+                + " (" + HOUR + ", " + MINUTE + ", " + DAY + ", " + MESSAGE + ", " + SNOOZETIME + ", " + ALARM_ID + ", " + ALIVE + ", " + SHUFFLE + ") "
+                + " VALUES (" + alarmObj.getmHour() + ", " + alarmObj.getmMinute() + ", "
+                + alarmObj.getmDay() + ", " + "'" + message + "'" + ", " + alarmObj.getmSnooze() + ", " + alarm_id + ", " + "'" + "true" + "'" + "," + shuffle + ")");
+    }
+
+
+    public void insertSongs(int alarmId, ArrayList<SongObject> songObj) {
 
         String playlist = "";
         if (songObj.size() > 0) {
@@ -419,6 +706,7 @@ public class DBhelper extends SQLiteOpenHelper {
 
     public ArrayList<SongObject> getSongs(int alarm_id) {
         int duration;
+        Log.i(TAG, "getSongs: alarm_id " + alarm_id);
         String uri, artist, songTitle, photoUrl, popularity, playlist;
         ArrayList<SongObject> arrayList = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
@@ -465,6 +753,10 @@ public class DBhelper extends SQLiteOpenHelper {
 
     public void insertHist(ArrayList<SongObject> arrayList) {
         int current_id = 0;
+
+        for (int i = 0; i < arrayList.size(); i++) {
+            Log.i(TAG, "insertHist: " + arrayList.get(i).getPlaylist());
+        }
 
         SQLiteDatabase db = getWritableDatabase();
 //        Log.i(TAG, "addSong: songArray");
@@ -529,8 +821,8 @@ public class DBhelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
 //        Log.i(TAG, "addSong: songArray");
 
-        db.execSQL(" DELETE FROM " + HIST_SONG_TABLE + " WHERE " + HIST_SONG_URI + " = " + "'" +  uri + "'"
-                + " AND " + HIST_PLAYLIST + " = " + "'" + playlist + "'" );
+        db.execSQL(" DELETE FROM " + HIST_SONG_TABLE + " WHERE " + HIST_SONG_URI + " = " + "'" + uri + "'"
+                + " AND " + HIST_PLAYLIST + " = " + "'" + playlist + "'");
         db.close();
     }
 
@@ -550,6 +842,11 @@ public class DBhelper extends SQLiteOpenHelper {
 
         title = title.replace("'", "`");
         artists = artists.replace("'", "`");
+        if (playlist == null) {
+            playlist = artists;
+        } else {
+        }
+        playlist = playlist.replace("'", "`");
 
         SQLiteDatabase db3 = getWritableDatabase();
 //        Log.i(TAG, "addSong: songArray");
@@ -578,9 +875,9 @@ public class DBhelper extends SQLiteOpenHelper {
     }
 
 
-    public SongObject
-    checkIfExistsHistPlaylist(String playlist, SQLiteDatabase db3, Cursor cursor) {
+    public SongObject checkIfExistsHistPlaylist(String playlist, SQLiteDatabase db3, Cursor cursor) {
 
+        playlist = playlist.replace("'", "`");
         SongObject songObject = null;
 //        Log.i(TAG, "addSong: songArray");
         cursor = db3.rawQuery("SELECT * FROM " + SONG_TABLE + " WHERE " + PLAYLIST + " = " + "'" + playlist + "'", null);

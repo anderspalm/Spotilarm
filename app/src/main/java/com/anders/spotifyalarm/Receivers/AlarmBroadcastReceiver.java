@@ -11,6 +11,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.anders.spotifyalarm.AlarmTrigger.AlertDialogActivity;
+import com.anders.spotifyalarm.SingAndDB.DBhelper;
 
 import java.util.Calendar;
 
@@ -69,42 +70,9 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
         Log.i(TAG, "setAlarm: --------------------------------------------------------------------------------");
         Log.i(TAG, "setAlarm: --------------------------------------------------------------------------------");
 
-//        if (hour > 12){
-//            hour = hour - 12;
-//        }
-//        int adjusted = hour + 12;
-
         Calendar mCalendar = Calendar.getInstance();
         mCalendar.setTimeInMillis(System.currentTimeMillis());
         mCalendar.set(Calendar.DAY_OF_WEEK, day);
-//        int dayOfWeek = mCalendar.get(Calendar.DAY_OF_WEEK);
-//        int adjDay = day;
-//        switch (adjDay) {
-//            case 7:
-//                adjDay = 1;
-//                break;
-//            case 1:
-//                adjDay = 2;
-//                break;
-//            case 2:
-//                adjDay = 3;
-//                break;
-//            case 3:
-//                adjDay = 4;
-//                break;
-//            case 4:
-//                adjDay = 5;
-//                break;
-//            case 5:
-//                adjDay = 6;
-//                break;
-//            case 6:
-//                adjDay = 7;
-//                break;
-//        }
-//
-//        mCalendar.set(Calendar.DAY_OF_WEEK, adjDay);
-
         mCalendar.set(Calendar.HOUR_OF_DAY, hour);
         mCalendar.set(Calendar.MINUTE, minute);
         mCalendar.set(Calendar.SECOND, 0);

@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/green1"
+    tools:context="com.anders.spotifyalarm.SettingsActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/green1"
+        android:gravity="center_vertical">
+
+        <Button
+            android:id="@+id/back_button"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5pt"
+            android:background="@drawable/back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="casual"
+            android:text="@string/your_settings"
+            android:textColor="@color/white"
+            android:textSize="@dimen/extraLarge"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="18dp"
+        android:layout_marginRight="18dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight=".33"
+            android:layout_marginTop="27dp"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4.5dp"
+                android:layout_marginTop="9dp"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="casual"
+                    android:text="@string/volume_range"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/large"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/seek_bar_percent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="4.5dp"
+                    android:fontFamily="casual"
+                    android:paddingLeft="9dp"
+                    android:text="0"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/large"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/percent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="4.5dp"
+                    android:fontFamily="casual"
+                    android:text="@string/percent"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/large"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <SeekBar
+                android:id="@+id/gradual_alarm_percent_seek_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:max="100"
+                android:progressDrawable="@drawable/thumb_layer"
+                android:progressTint="@color/grey"
+                android:splitTrack="false"
+                android:thumb="@drawable/thumb_custom"
+                android:thumbOffset="9dp" />
+        </LinearLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_marginEnd="18dp"
+            android:layout_weight=".33"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginRight="18dp"
+                android:fontFamily="casual"
+                android:gravity="center"
+                android:text="@string/vibrate_on_ring"
+                android:textColor="@color/white"
+                android:textSize="@dimen/large"
+                android:textStyle="bold" />
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/switch_vibrate"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:textColor="@color/white"
+                android:textColorHighlight="@color/blue1"
+                android:textOff="Off"
+                android:textOn="On"
+                android:textColorHint="@color/white"
+                android:theme="@style/Theme.MyActivityTheme"
+                android:thumb="@drawable/switch_button_selector"
+                app:showText="true"
+                app:track="@drawable/switch_custom_track" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_marginEnd="18dp"
+            android:layout_weight=".33"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginRight="18dp"
+                android:fontFamily="casual"
+                android:gravity="center"
+                android:text="@string/gradual_wake_up"
+                android:textColor="@color/white"
+                android:textSize="@dimen/large"
+                android:textStyle="bold" />
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/switch_gradual_alarm"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:textColor="@color/white"
+                android:textColorHighlight="@color/orange"
+                android:textOff="Off"
+                android:textOn="On"
+                android:theme="@style/Theme.MyActivityTheme"
+                android:thumb="@drawable/switch_button_selector"
+                app:showText="true"
+                app:track="@drawable/switch_custom_track" />
+
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight=".33"
+            android:layout_marginTop="27dp"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4.5dp"
+                android:layout_marginTop="9dp"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="casual"
+                    android:text="@string/gradual_sound_increase"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/large"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/seek_bar_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="4.5dp"
+                    android:fontFamily="casual"
+                    android:paddingLeft="9dp"
+                    android:text="0"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/large"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/minutes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="4.5dp"
+                    android:fontFamily="casual"
+                    android:text="@string/minutes"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/large"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        <SeekBar
+            android:id="@+id/gradual_alarm_time_seek_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="5"
+            android:progressDrawable="@drawable/thumb_layer"
+            android:progressTint="@color/grey"
+            android:splitTrack="false"
+            android:thumb="@drawable/thumb_custom"
+            android:thumbOffset="9dp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,46 +1,35 @@
 package com.anders.spotifyalarm.UiAids;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.RectF;
+import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
+import android.support.v7.widget.SwitchCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.anders.spotifyalarm.AlarmTrigger.AlarmObject;
-import com.anders.spotifyalarm.MainActivity;
 import com.anders.spotifyalarm.MediaSearch.songSearch.SongObject;
-import com.anders.spotifyalarm.NewAlarmActivity;
 import com.anders.spotifyalarm.R;
+import com.anders.spotifyalarm.Receivers.AlarmBroadcastReceiver;
 import com.anders.spotifyalarm.SingAndDB.DBhelper;
 import com.anders.spotifyalarm.SingAndDB.MasterSingleton;
-import com.andexert.library.RippleView;
-import com.spotify.sdk.android.authentication.AuthenticationClient;
-import com.spotify.sdk.android.authentication.AuthenticationRequest;
-import com.spotify.sdk.android.authentication.AuthenticationResponse;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
-
-import javax.annotation.OverridingMethodsMustInvokeSuper;
-
-import kaaes.spotify.webapi.android.SpotifyService;
 
 import static android.content.ContentValues.TAG;
 
@@ -88,7 +77,28 @@ public class LandingRViewAdapter extends RecyclerView.Adapter<LandingRViewAdapte
         holder.mFri.setText("");
         holder.mSat.setText("");
         holder.mSun.setText("");
-        holder.mOuterContainer.setAnimation(mAnimator);
+//        holder.mOuterContainer.setAnimation(mAnimator);
+
+        int shuffle = mDBHelper.isShuffle(mNestedArrayList.get(position).get(0).getmAlarmId());
+
+        Log.i(TAG, "onBindViewHolder: shuffleshuffleshuffleshuffleshuffleshuffleshuffleshuffleshuffleshuffleshuffleshuffle" + shuffle);
+        if (shuffle == 0){
+            Drawable grey = mContext.getResources().getDrawable(R.drawable.no_shuffle);
+            holder.mShuffle.setImageDrawable(grey);
+        } else {
+            Drawable green = mContext.getResources().getDrawable(R.drawable.yes_shuffle);
+            holder.mShuffle.setImageDrawable(green);
+        }
+
+
+        String truth = mDBHelper.isAlive(mNestedArrayList.get(position).get(0).getmAlarmId());
+//        Toast.makeText(mContext, truth, Toast.LENGTH_SHORT).show();
+
+        if (truth.equals("true")){
+            holder.mSwitch.setChecked(true);
+        } else {
+            holder.mSwitch.setChecked(false);
+        }
 
         if (mNestedArrayList.get(position).size() > 0) {
             ArrayList<SongObject> count = mDBHelper.getSongs(mNestedArrayList.get(position).get(0).getmAlarmId());
@@ -224,22 +234,22 @@ public class LandingRViewAdapter extends RecyclerView.Adapter<LandingRViewAdapte
 
 
     protected class LandingRViewViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-
-        //        Button mSwitch;
         TextView mTime, mAmPm, mMon, mTues, mWed, mThu, mFri, mSat, mSun;
         TextView mSongCount, mSongType;
         LinearLayout mContainer;
-//        RippleView mRippleLayout;
-        RippleView mOuterContainer;
+//        RippleView mOuterContainer;
+        SwitchCompat mSwitch;
+        ImageView mShuffle;
 
         protected LandingRViewViewHolder(View itemView) {
             super(itemView);
-//            mRippleLayout = (RippleView) itemView.findViewById(R.id.ripple_layout);
             mContainer = (LinearLayout) itemView.findViewById(R.id.rv_item_container);
-            mOuterContainer = (RippleView) itemView.findViewById(R.id.container);
-//            mContainer.setOnClickListener(this);
-//            mRippleLayout.setOnClickListener(this);
-            mOuterContainer.setOnClickListener(this);
+//            mOuterContainer = (RippleView) itemView.findViewById(R.id.container);
+            mSwitch = (SwitchCompat) itemView.findViewById(R.id.switch2);
+            mSwitch.setOnClickListener(this);
+            mShuffle = (ImageView) itemView.findViewById(R.id.shuffle_image);
+            mShuffle.setOnClickListener(this);
+//            mOuterContainer.setOnClickListener(this);
 
             mSongCount = (TextView) itemView.findViewById(R.id.song_count);
             mSongType = (TextView) itemView.findViewById(R.id.song_type);
@@ -258,37 +268,95 @@ public class LandingRViewAdapter extends RecyclerView.Adapter<LandingRViewAdapte
         public void onClick(View view) {
             Log.i(TAG, "onClick: view.getId() " + view.getId());
             switch (view.getId()) {
-                case R.id.container:
-                    if (!mSingleton.getUserId().equals("0")) {
-                        Log.i(TAG, "onClick: mSingleton.getUserId() " + mSingleton.getUserId());
-                        mOuterContainer.startAnimation(mAnimator);
-                        int hour = mNestedArrayList.get(getAdapterPosition()).get(0).getmHour();
-                        int minute = mNestedArrayList.get(getAdapterPosition()).get(0).getmMinute();
-                        Intent intent = new Intent(mContext, NewAlarmActivity.class);
-                        intent.putExtra("hour", hour);
-                        intent.putExtra("min", minute);
-                        intent.putExtra("alarm_id", mNestedArrayList.get(getAdapterPosition()).get(0).getmAlarmId());
-                        intent.putExtra("array", mNestedArrayList.get(getAdapterPosition()));
-                        intent.putExtra("snooze", mNestedArrayList.get(getAdapterPosition()).get(0).getmSnooze());
-                        intent.putExtra("message", mNestedArrayList.get(getAdapterPosition()).get(0).getmMessage());
-                        mContext.startActivity(intent);
-//                            mActivity.overridePendingTransition(0, 0);
-//                            mActivity.overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_right);
+                case R.id.shuffle_image:
+                    Drawable green = mContext.getResources().getDrawable(R.drawable.yes_shuffle);
+                    Drawable grey = mContext.getResources().getDrawable(R.drawable.no_shuffle);
+                    if (mShuffle.getDrawable().getConstantState() == green.getConstantState()){
+                        mShuffle.setImageDrawable(grey);
+                        mDBHelper.updateShuffle(mNestedArrayList.get(getAdapterPosition()).get(0).getmAlarmId(),"off");
+                    } else {
+                        mShuffle.setImageDrawable(green);
+                        mDBHelper.updateShuffle(mNestedArrayList.get(getAdapterPosition()).get(0).getmAlarmId(),"on");
                     }
-                    else {
-                        Toast.makeText(mContext,"Please wait for it to load",Toast.LENGTH_SHORT).show();
-                        Log.i(TAG, "onCreate: AuthenticationRequest.Builder builder");
-                        AuthenticationRequest.Builder builder =
-                                new AuthenticationRequest.Builder(
-                                        "8245c9c6491c426cbccf670997c14766",
-                                        AuthenticationResponse.Type.TOKEN,
-                                        REDIRECT_URL);
+                    break;
+                case R.id.switch2:
+                    if (!mSwitch.isChecked()) {
+                        for (int i = 0; i < mNestedArrayList.get(getAdapterPosition()).size(); i++) {
+                            AlarmManager alarmManager = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
+                            Intent intent = new Intent(mContext, AlarmBroadcastReceiver.class);
+                            PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                                    mContext,
+                                    mNestedArrayList.get(getAdapterPosition()).get(i).getmIndex(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                            alarmManager.cancel(pendingIntent);
+                            pendingIntent.cancel();
+                            mDBHelper.removeCheck("yes", mNestedArrayList.get(getAdapterPosition()).get(i).getmAlarmId());
+                        }
+                    } else {
+
+                        Calendar mCalendar = Calendar.getInstance();
+                        mCalendar.setTimeInMillis(System.currentTimeMillis());
 
 
-                        builder.setScopes(new String[]{"user-read-private", "streaming"});
-                        AuthenticationRequest request = builder.build();
+                        for (int i = 0; i < mNestedArrayList.get(getAdapterPosition()).size(); i++) {
+                            int minute = mNestedArrayList.get(getAdapterPosition()).get(i).getmMinute();
+                            int hour = mNestedArrayList.get(getAdapterPosition()).get(i).getmHour();
+                            int day = mNestedArrayList.get(getAdapterPosition()).get(i).getmDay();
+                            String message = mNestedArrayList.get(getAdapterPosition()).get(i).getmMessage();
+                            int snooze = mNestedArrayList.get(getAdapterPosition()).get(i).getmDay();
+                            int identifyingCode = mNestedArrayList.get(getAdapterPosition()).get(i).getmIndex();
+                            int alarm_id = mNestedArrayList.get(getAdapterPosition()).get(i).getmAlarmId();
 
-                        AuthenticationClient.openLoginActivity(mActivity, REQUEST_CODE, request);
+                            mCalendar.set(Calendar.DAY_OF_WEEK, day);
+                            mCalendar.set(Calendar.HOUR_OF_DAY, hour);
+                            mCalendar.set(Calendar.MINUTE, minute);
+                            mCalendar.set(Calendar.SECOND, 0);
+                            mCalendar.set(Calendar.MILLISECOND, 0);
+
+                            Log.i(TAG, "setAlarm: --------------------------------------------------------------------------------");
+                            Log.i(TAG, "setAlarm: --------------------------------------------------------------------------------");
+                            Log.i(TAG, "setAlarm:  | time set:" + mCalendar);
+                            Log.i(TAG, "setAlarm:  | time set:" + mCalendar.get(Calendar.DAY_OF_WEEK));
+                            if (mCalendar.get(Calendar.DAY_OF_MONTH) >= (Calendar.getInstance().get(Calendar.DAY_OF_MONTH) + 7)) {
+                                mCalendar.set(Calendar.DAY_OF_MONTH, (mCalendar.get(Calendar.DAY_OF_MONTH) - 7));
+                            } else {
+                            }
+                            Log.i(TAG, "setAlarm:  | time set:" + mCalendar.get(Calendar.DAY_OF_MONTH));
+                            Log.i(TAG, "setAlarm:  | time set:" + mCalendar.getTime());
+                            Log.i(TAG, "setAlarm:  | time set:" + mCalendar.getTime());
+                            Log.i(TAG, "setAlarm: --------------------------------------------------------------------------------");
+                            Log.i(TAG, "setAlarm: --------------------------------------------------------------------------------");
+
+                            String temp = String.valueOf(mCalendar.getTime());
+
+//                            Toast.makeText(mContext, temp, Toast.LENGTH_SHORT).show();
+                            if (!(mCalendar.getTimeInMillis() < Calendar.getInstance().getTimeInMillis())) {
+
+//        start new instance of alarm manager
+                                AlarmManager alarmManager = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
+//        set intent for pending intent
+                                Intent intent = new Intent(mContext, AlarmBroadcastReceiver.class);
+
+                                Log.i(TAG, "setAlarm: message " + message);
+
+//        add data to intent
+                                intent.putExtra("hour", hour);
+                                intent.putExtra("minute", minute);
+                                intent.putExtra("day", day);
+                                intent.putExtra("unique_code", identifyingCode);
+                                intent.putExtra("alarm_id_primary_table", alarm_id);
+                                intent.putExtra("snooze", snooze);
+                                intent.putExtra("message", message);
+
+//                                Toast.makeText(mContext, "Not Checked", Toast.LENGTH_SHORT).show();
+                                PendingIntent pendingIntent = PendingIntent.getBroadcast(mContext, identifyingCode, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+//        add everything to the alarm manager and start the receiver wait operation
+                                alarmManager.setRepeating(
+                                        AlarmManager.RTC_WAKEUP,
+                                        mCalendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY * 7,
+                                        pendingIntent);
+                            } else {}
+                            mDBHelper.removeCheck("reset", mNestedArrayList.get(getAdapterPosition()).get(i).getmAlarmId());
+                        }
                     }
                     break;
                 default:

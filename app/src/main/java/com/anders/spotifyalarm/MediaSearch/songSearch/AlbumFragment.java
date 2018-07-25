@@ -9,7 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 
 import com.anders.spotifyalarm.MediaSearch.SongAdapter;
 import com.anders.spotifyalarm.R;
@@ -17,8 +16,6 @@ import com.anders.spotifyalarm.SingAndDB.DBhelper;
 import com.anders.spotifyalarm.SingAndDB.MasterSingleton;
 
 import java.util.ArrayList;
-
-import kaaes.spotify.webapi.android.models.Track;
 
 /**
  * Created by anders on 3/3/2017.
@@ -35,8 +32,9 @@ public class AlbumFragment extends Fragment {
     public AlbumFragment(){}
 
     public static AlbumFragment getInstance(ArrayList<SongObject> arrayList, Context context, PlaylistListener listener) {
+        AlbumFragment albumFragment = new AlbumFragment();
         mContext = context;
-        return null;
+        return albumFragment;
     }
 
     @Nullable
@@ -54,17 +52,17 @@ public class AlbumFragment extends Fragment {
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext,LinearLayoutManager.VERTICAL,false);
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.album_rv_layout);
-        SearchAdapter adapter = new SearchAdapter(mContext, mSing, mDBHelper, 0, new SearchAdapter.ItemSelectedListener() {
-            @Override
-            public void onItemSelected(View itemView, Track item, SongObject object) {
-//                mActionListener.selectTrack(item);
-                mSing.addSong(object);
-                mSongAdapter.updateList(mSing.getSongObjArray());
-                mSongAdapter.notifyDataSetChanged();
-            }
-        });
+//        SearchAdapter adapter = new SearchAdapter(mContext, mSing, mDBHelper, 0, new SearchAdapter.ItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(View itemView, Track item, SongObject object) {
+////                mActionListener.selectTrack(item);
+//                mSing.addSong(object);
+//                mSongAdapter.updateList(mSing.getSongObjArray());
+//                mSongAdapter.notifyDataSetChanged();
+//            }
+//        });
         recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(adapter);
+//        recyclerView.setAdapter(adapter);
 
 
         return view;

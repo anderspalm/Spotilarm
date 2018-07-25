@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,14 +16,12 @@ import android.widget.FrameLayout;
 
 import com.anders.spotifyalarm.MediaSearch.songSearch.SongObject;
 import com.anders.spotifyalarm.R;
-import com.anders.spotifyalarm.SingAndDB.DBhelper;
 import com.anders.spotifyalarm.SingAndDB.MasterSingleton;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.spotify.sdk.android.authentication.AuthenticationClient;
@@ -39,8 +36,6 @@ import java.util.Map;
 
 import kaaes.spotify.webapi.android.SpotifyApi;
 import kaaes.spotify.webapi.android.SpotifyService;
-import kaaes.spotify.webapi.android.models.Pager;
-import kaaes.spotify.webapi.android.models.PlaylistSimple;
 
 import static android.content.ContentValues.TAG;
 

@@ -1,7 +1,6 @@
 package com.anders.spotifyalarm.MediaSearch.playlistSearch;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,20 +11,12 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.anders.spotifyalarm.MediaSearch.MediaFragment;
-import com.anders.spotifyalarm.NewAlarmActivity;
 import com.anders.spotifyalarm.R;
 import com.anders.spotifyalarm.SingAndDB.MasterSingleton;
 import com.anders.spotifyalarm.UiAids.PhotoTransformation;
 import com.andexert.library.RippleView;
-import com.spotify.sdk.android.authentication.AuthenticationClient;
-import com.spotify.sdk.android.authentication.AuthenticationRequest;
-import com.spotify.sdk.android.authentication.AuthenticationResponse;
 import com.squareup.picasso.Picasso;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -94,7 +85,7 @@ public class SpotifyPlaylistAdapter extends RecyclerView.Adapter<SpotifyPlaylist
             Log.i(TAG, "onClick: ");
             if (v.getId() == mRipple.getId()) {
                 mContainer.startAnimation(mButtonAnimation);
-                Toast.makeText(mContext, "Hello", Toast.LENGTH_LONG).show();
+//                Toast.makeText(mContext, "Hello", Toast.LENGTH_LONG).show();
                 mReturnSpotifyPlaylist.returnPlaylistListener(mList.get(getAdapterPosition()));
             }
         }

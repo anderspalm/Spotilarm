@@ -6,7 +6,6 @@ package com.anders.spotifyalarm.MediaSearch.songSearch;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.spotify.sdk.android.player.Player;
 
@@ -52,7 +51,7 @@ public class SearchPresenter implements Search.ActionListener {
     @Override
     public void search(@Nullable String searchQuery) {
         if (searchQuery != null && !searchQuery.isEmpty() && !searchQuery.equals(mCurrentQuery)) {
-            logMessage("query text submit " + searchQuery);
+            Log.i(TAG, "search: query text submit " + searchQuery);
             mCurrentQuery = searchQuery;
             mView.reset();
             mSearchListener = new SearchPager.CompleteListener() {
@@ -99,8 +98,6 @@ public class SearchPresenter implements Search.ActionListener {
     @Override
     public void selectTrack(Track item) {
         String previewUrl = item.preview_url;
-
-
     }
 
     private void logError(String msg) {

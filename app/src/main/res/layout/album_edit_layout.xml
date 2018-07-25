@@ -19,11 +19,47 @@
             android:layout_marginTop="?attr/actionBarSize"
             android:orientation="vertical">
 
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:background="@color/white"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/playlist_title_edit_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
+                    android:layout_marginStart="9dp"
+                    android:fontFamily="casual"
+                    android:hint="@string/set_title_hint"
+                    android:textColorHint="@color/grey"
+                    android:textColor="@color/grey"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/normal" />
+
+                <Button
+                    android:id="@+id/set_title"
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_margin="2.5dp"
+                    android:layout_weight=".5"
+                    android:background="#00000000"
+                    android:layout_marginEnd="9dp"
+                    android:fontFamily="serif"
+                    android:text="@string/set_title"
+                    android:textAlignment="textEnd"
+                    android:textAllCaps="true"
+                    android:textSize="@dimen/normal"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="9dp"
-                android:fontFamily="monospace"
+                android:fontFamily="casual"
                 android:paddingTop="9dp"
                 android:text="Swipe To Dismiss Songs"
                 android:textColor="@color/white"
@@ -40,7 +76,7 @@
             android:id="@+id/top"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@drawable/button_background"
+            android:background="@color/green1"
             android:orientation="vertical"
             android:padding="5dp">
 
@@ -63,7 +99,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="9dp"
                     android:fontFamily="serif"
-                    android:text="Search for any song"
+                    android:text="@string/search_for_songs"
                     android:textColor="@color/white"
                     android:textSize="@dimen/large"
                     android:textStyle="bold" />
@@ -88,18 +124,15 @@
             android:layout_marginLeft="18dp"
             android:layout_marginRight="18dp"
             android:layout_marginTop="18dp"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <android.support.v7.widget.SearchView
                 android:id="@+id/search_bar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="@color/white"
-                android:queryHint="Search for your songs here"
-                android:searchHintIcon="@drawable/alarm_clock"
-                android:searchIcon="@drawable/cancel_white"
-                android:text="Hello World!"
-                app:defaultQueryHint="Search for your songs here" />
+                android:queryHint="@string/search_for_songs"
+                app:defaultQueryHint="@string/search_for_songs" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/album_rv_layout"
@@ -115,7 +148,7 @@
                 android:layout_gravity="bottom"
                 android:background="@drawable/delete_button_background"
                 android:fontFamily="monospace"
-                android:text="Close Results"
+                android:text="@string/close_results"
                 android:textColor="@color/white"
                 android:textSize="@dimen/large" />
         </FrameLayout>

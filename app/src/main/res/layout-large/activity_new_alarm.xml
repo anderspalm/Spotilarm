@@ -1,0 +1,531 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grey"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/green1">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/back_button"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="5pt"
+                    android:background="@drawable/back" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="9dp"
+                android:gravity="center">
+
+                <LinearLayout
+                    android:id="@+id/set_time_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/alarm_clock_white"
+                        android:fontFamily="monospace"
+                        android:gravity="bottom"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/normal"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:alpha=".9"
+                        android:fontFamily="casual"
+                        android:gravity="bottom"
+                        android:text="@string/set_time"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/extraExtraLarge"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/chooseSong"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/accept"
+                        android:elevation="4dp"
+                        android:textSize="@dimen/extraExtraLarge"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:alpha=".9"
+                        android:fontFamily="casual"
+                        android:gravity="bottom"
+                        android:text="@string/set_music"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/extraExtraLarge"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </RelativeLayout>
+
+        <!--<ScrollView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_alignParentStart="true"-->
+        <!--android:layout_below="@+id/relativeLayout"-->
+        <!--android:orientation="vertical">-->
+
+
+        <FrameLayout
+            android:id="@+id/frameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_marginTop="?attr/actionBarSize"
+                android:background="@color/green1" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginTop="?attr/actionBarSize"
+                android:orientation="vertical">
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginLeft="5pt"
+                        android:layout_marginRight="5pt"
+                        android:gravity="top"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/media_recycler_view_background"
+                            android:orientation="vertical">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="4.5pt">
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerInParent="true"
+                                    android:gravity="center_horizontal"
+                                    android:orientation="horizontal">
+
+                                    <Button
+                                        android:id="@+id/monday"
+                                        android:layout_width="0px"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="1pt"
+                                        android:layout_marginRight="1pt"
+                                        android:layout_weight="0.1428"
+                                        android:background="#00000000"
+                                        android:padding="20dp"
+                                        android:text="@string/monday_new_alarm"
+                                        android:textColor="@color/green1"
+                                        android:textSize="@dimen/extraLarge" />
+
+
+                                    <TextView
+                                        android:layout_width="1pt"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginBottom="5pt"
+                                        android:layout_marginTop="5pt"
+                                        android:background="@color/green1" />
+
+                                    <Button
+                                        android:id="@+id/tuesday"
+                                        android:layout_width="0px"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="1pt"
+                                        android:layout_marginRight="1pt"
+                                        android:layout_weight="0.1428"
+                                        android:background="#00000000"
+                                        android:padding="20dp"
+                                        android:text="@string/tuesday_new_alarm"
+                                        android:textColor="@color/green1"
+                                        android:textSize="@dimen/extraLarge" />
+
+
+                                    <TextView
+                                        android:layout_width="1pt"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginBottom="5pt"
+                                        android:layout_marginTop="5pt"
+                                        android:background="@color/green1" />
+
+                                    <Button
+                                        android:id="@+id/wednesday"
+                                        android:layout_width="0px"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="1pt"
+                                        android:layout_marginRight="1pt"
+                                        android:layout_weight="0.1428"
+                                        android:background="#00000000"
+                                        android:padding="20dp"
+                                        android:text="@string/wednseday_new_alarm"
+                                        android:textColor="@color/green1"
+                                        android:textSize="@dimen/extraLarge" />
+
+
+                                    <TextView
+                                        android:layout_width="1pt"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginBottom="5pt"
+                                        android:layout_marginTop="5pt"
+                                        android:background="@color/green1" />
+
+                                    <Button
+                                        android:id="@+id/thursday"
+                                        android:layout_width="0px"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="1pt"
+                                        android:layout_marginRight="1pt"
+                                        android:layout_weight="0.1428"
+                                        android:background="#00000000"
+                                        android:padding="20dp"
+                                        android:text="@string/thursday_new_alarm"
+                                        android:textColor="@color/green1"
+                                        android:textSize="@dimen/extraLarge" />
+
+
+                                    <TextView
+                                        android:layout_width="1pt"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginBottom="5pt"
+                                        android:layout_marginTop="5pt"
+                                        android:background="@color/green1" />
+
+                                    <Button
+                                        android:id="@+id/friday"
+                                        android:layout_width="0px"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="1pt"
+                                        android:layout_marginRight="1pt"
+                                        android:layout_weight="0.1428"
+                                        android:background="#00000000"
+                                        android:padding="20dp"
+                                        android:text="@string/friday_new_alarm"
+                                        android:textColor="@color/green1"
+                                        android:textSize="@dimen/extraLarge" />
+
+
+                                    <TextView
+                                        android:layout_width="1pt"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginBottom="5pt"
+                                        android:layout_marginTop="5pt"
+                                        android:background="@color/green1" />
+
+                                    <Button
+                                        android:id="@+id/saturday"
+                                        android:layout_width="0px"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="1pt"
+                                        android:layout_marginRight="1pt"
+                                        android:layout_weight="0.1428"
+                                        android:background="#00000000"
+                                        android:padding="20dp"
+                                        android:text="@string/saturday_new_alarm"
+                                        android:textColor="@color/green1"
+                                        android:textSize="@dimen/extraLarge" />
+
+                                    <TextView
+                                        android:layout_width="1pt"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginBottom="5pt"
+                                        android:layout_marginTop="5pt"
+                                        android:background="@color/green1" />
+
+                                    <Button
+                                        android:id="@+id/sunday"
+                                        android:layout_width="0px"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="1pt"
+                                        android:layout_marginRight="1pt"
+                                        android:layout_weight="0.1428"
+                                        android:background="#00000000"
+                                        android:padding="20dp"
+                                        android:text="@string/sunday_new_alarm"
+                                        android:textColor="@color/green1"
+                                        android:textSize="@dimen/extraLarge" />
+
+                                </LinearLayout>
+                            </RelativeLayout>
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="27dp"
+                            android:background="@drawable/media_recycler_view_background"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="4.5dp"
+                                android:layout_marginTop="18dp"
+                                android:gravity="center">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginLeft="9dp"
+                                    android:fontFamily="casual"
+                                    android:text="@string/snooze_for_time_message"
+                                    android:textColor="@color/blue1"
+                                    android:textSize="@dimen/extraExtraLarge"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/seek_bar_time"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginRight="4.5dp"
+                                    android:fontFamily="casual"
+                                    android:paddingLeft="9dp"
+                                    android:text="0"
+                                    android:textColor="@color/green1"
+                                    android:textSize="@dimen/extraExtraLarge"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/minutes"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginRight="4.5dp"
+                                    android:fontFamily="casual"
+                                    android:text="@string/minutes"
+                                    android:textColor="@color/green1"
+                                    android:textSize="@dimen/extraExtraLarge"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                            <SeekBar
+                                android:id="@+id/snooze_seek_bar"
+                                android:layout_width="match_parent"
+                                android:layout_height="120dp"
+                                android:max="90" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="27dp"
+                            android:layout_marginTop="27dp"
+                            android:background="@drawable/media_recycler_view_background"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="9dp"
+                                        android:fontFamily="monospace"
+                                        android:padding="20dp"
+                                        android:text="Message:"
+                                        android:textColor="@color/white"
+                                        android:textSize="@dimen/normal"
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:id="@+id/message_tv"
+                                        android:layout_width="1px"
+                                        android:layout_height="1px"
+                                        android:padding="4.5dp"
+                                        android:textColor="@color/orange"
+                                        android:textSize="@dimen/normal" />
+
+                                    <TextView
+                                        android:id="@+id/set_message"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignParentLeft="true"
+                                        android:layout_centerVertical="true"
+                                        android:layout_marginLeft="9dp"
+                                        android:fontFamily="casual"
+                                        android:text="@string/set_message"
+                                        android:textColor="@color/blue1"
+                                        android:textSize="@dimen/extraExtraLarge"
+                                        android:textStyle="bold" />
+                                </RelativeLayout>
+
+                            </LinearLayout>
+
+                            <EditText
+                                android:id="@+id/message_et"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="serif"
+                                android:gravity="start"
+                                android:hint="@string/insert_message"
+                                android:minHeight="250dp"
+                                android:padding="9dp"
+                                android:textAlignment="textStart"
+                                android:textColor="@color/blue1"
+                                android:textColorHint="@color/grey"
+                                android:textSize="@dimen/extraExtraLarge" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </RelativeLayout>
+            </LinearLayout>
+        </FrameLayout>
+
+
+        <android.support.v7.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="@dimen/fab_margin"
+            android:visibility="visible"
+            app:cardCornerRadius="30dp">
+
+            <Button
+                android:id="@+id/set_alarm_1"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@drawable/accept" />
+        </android.support.v7.widget.CardView>
+    </RelativeLayout>
+
+
+    <FrameLayout
+        android:id="@+id/time_frame_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:background="@color/colorPrimaryLightTransparent"
+        android:visibility="gone">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="18dp"
+                android:layout_marginRight="18dp">
+
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    app:cardCornerRadius="30dp">
+
+                    <Button
+                        android:id="@+id/accept"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:background="@drawable/accept" />
+
+                </android.support.v7.widget.CardView>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="32dp"
+                    android:background="@drawable/time_popup_background"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="18dp">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+
+                        <TimePicker
+                            android:id="@+id/time_picker"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:headerAmPmTextAppearance="@color/green1"
+                            android:headerBackground="@color/green1"
+                            android:headerTimeTextAppearance="@color/green1"
+                            android:numbersInnerTextColor="@color/green1"
+                            android:numbersSelectorColor="@color/listGreen"
+                            android:numbersTextColor="@color/green1"
+                            android:timePickerMode="spinner" />
+
+                    </RelativeLayout>
+                </RelativeLayout>
+
+            </FrameLayout>
+
+        </RelativeLayout>
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/media_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/Transparent"
+        android:elevation="2dp"
+        android:visibility="gone" />
+</RelativeLayout>

@@ -1,10 +1,12 @@
 package com.anders.spotifyalarm;
 
-import android.animation.Animator;
 import android.content.Context;
 import android.content.Intent;
+import android.media.AudioManager;
+import android.media.Ringtone;
 import android.os.AsyncTask;
 import android.os.Handler;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,10 +16,9 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.anders.spotifyalarm.AlarmTrigger.AlarmObject;
 import com.anders.spotifyalarm.MediaSearch.songSearch.SongObject;
@@ -26,59 +27,69 @@ import com.anders.spotifyalarm.SingAndDB.DBhelper;
 import com.anders.spotifyalarm.SingAndDB.MasterSingleton;
 import com.anders.spotifyalarm.UiAids.LandingRViewAdapter;
 import com.anders.spotifyalarm.UiAids.TouchHelperCallback;
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.github.javiersantos.appupdater.AppUpdater;
 import com.spotify.sdk.android.authentication.AuthenticationClient;
 import com.spotify.sdk.android.authentication.AuthenticationRequest;
 import com.spotify.sdk.android.authentication.AuthenticationResponse;
+import com.spotify.sdk.android.player.Config;
 import com.spotify.sdk.android.player.ConnectionStateCallback;
 import com.spotify.sdk.android.player.Error;
-import com.spotify.sdk.android.player.Player;
+import com.spotify.sdk.android.player.PlaybackState;
 import com.spotify.sdk.android.player.PlayerEvent;
+import com.spotify.sdk.android.player.Spotify;
 import com.spotify.sdk.android.player.SpotifyPlayer;
 
-import org.json.JSONObject;
-
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 import kaaes.spotify.webapi.android.SpotifyApi;
 import kaaes.spotify.webapi.android.SpotifyService;
-import kaaes.spotify.webapi.android.models.Pager;
-import kaaes.spotify.webapi.android.models.PlaylistSimple;
 
 import static android.content.ContentValues.TAG;
 
 public class MainActivity extends AppCompatActivity implements
         SpotifyPlayer.NotificationCallback, ConnectionStateCallback {
 
+// ---------------------------------------------------
+//         Playback Class Variables
+// ---------------------------------------------------
+
+    SpotifyPlayer mCurrentPlaylistPlayer;
+    DBhelper mDatabaseHelper;
+    private static final int REQUEST_CODE = 1337;
+    public static final String REDIRECT_URL = "http://localhost:8888/callback";
+    ArrayList<SongObject> songList;
+    Ringtone currentRingtone;
+    Thread read;
+    AudioManager mAudioManager;
+    Config mPlayerConfig;
+    private static final String KEY_CURRENT_QUERY = "CURRENT_QUERY";
+    private static FrameLayout mFrameLayout;
+    private PlaybackState mCurrentPlaybackState;
+
+// ---------------------------------------------------
+//         General Class Variables
+// ---------------------------------------------------
     DailyBroadcast mReceiver;
-    public Player mPlayer;
     Context mContext;
     ArrayList<ArrayList<AlarmObject>> mGroupedAlarms;
     DBhelper mDBHelper;
-    LinearLayout mAddAlarm;
+    FloatingActionButton mAddAlarm;
     MasterSingleton mSingleton;
     LandingRViewAdapter mAdapter;
     Animation mAnimator;
     RequestQueue queue;
-    private static final int REQUEST_CODE = 1337;
     SpotifyService mSpotify;
-    public static final String REDIRECT_URL = "http://localhost:8888/callback";
     String mAccessToken;
     Handler mHandler;
+    AppUpdater mAppUpdater;
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,14 +99,54 @@ public class MainActivity extends AppCompatActivity implements
         mReceiver = new DailyBroadcast();
         mContext = MainActivity.this;
 
-//        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-//        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+//
+
+
+
+//        Bundle exitBundle = getIntent().getExtras();
+//
+//        if (exitBundle != null) {
+//            Log.i(TAG, "onCreate: exiting exitBundle" + exitBundle);
+//            if (exitBundle.getBoolean("exiting")) {
+//                Log.i(TAG, "MainAcitivty onCreate: exiting exitBundle.getBoolean(exiting)" + exitBundle.getBoolean("exiting"));
+////                finish();
+////                System.exit(0);
+////                onDestroy();
+//                finish();
+//            }
+//        }
+
+        mAppUpdater = new AppUpdater(this);
+        mAppUpdater.start();
+
+        LinearLayout login_out = (LinearLayout) findViewById(R.id.login);
+
+        login_out.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+            }
+        });
+
+
+//        setting the Settings Activity button
+        ImageView settingsButton = (ImageView) findViewById(R.id.settings_activity);
+        settingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext,SettingsActivity.class);
+                finish();
+                startActivity(intent);
+                overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_right);
+            }
+        });
 
 
         Log.i(TAG, "onCreate:  mSingleton.getmAuthToken() " + mSingleton.getmAuthToken());
         Log.i(TAG, "onCreate: mSingleton.getUserId() " + mSingleton.getUserId());
 
-        if (!mSingleton.getUserId().equals("0") && mSingleton.getmAuthToken() == null) {
+        if (mSingleton.getUserId().equals("0") && mSingleton.getmAuthToken() == null) {
             Log.i(TAG, "onCreate: AuthenticationRequest.Builder builder");
             AuthenticationRequest.Builder builder =
                     new AuthenticationRequest.Builder(
@@ -116,6 +167,14 @@ public class MainActivity extends AppCompatActivity implements
         }
 
         mDBHelper = DBhelper.getmInstance(mContext);
+
+        if (mDBHelper.getGradualWakeup().equals("aaa1")){
+            mDBHelper.setSettingsOnCreate();
+            String temp = "";
+            temp = mDBHelper.getGradualWakeup();
+            Log.i(TAG, "onCreate: ");
+        } else {}
+
         mGroupedAlarms = mDBHelper.getAllAlarms();
 
         setInitializers();
@@ -129,7 +188,7 @@ public class MainActivity extends AppCompatActivity implements
         recyclerView.setAdapter(mAdapter);
 
 //        set touch helper
-        ItemTouchHelper.Callback callback = new TouchHelperCallback(mAdapter);
+        ItemTouchHelper.Callback callback = new TouchHelperCallback(mGroupedAlarms, mAdapter, mContext);
         ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
         touchHelper.attachToRecyclerView(recyclerView);
 
@@ -145,44 +204,28 @@ public class MainActivity extends AppCompatActivity implements
         mAddAlarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                if (!mSingleton.getUserId().equals("0")) {
-                    Thread thread = new Thread() {
-                        @Override
-                        public void run() {
+                Thread thread = new Thread() {
+                    @Override
+                    public void run() {
 
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    mAddAlarm.startAnimation(mAnimator);
-                                }
-                            });
-
-                            try {
-                                sleep(350);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                mAddAlarm.startAnimation(mAnimator);
                             }
-                            Intent intent = new Intent(mContext, NewAlarmActivity.class);
-                            startActivity(intent);
-                            overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_right);
+                        });
+
+                        try {
+                            sleep(350);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
                         }
-                    };
-                    thread.run();
-//                } else {
-//                    Toast.makeText(mContext, "Please wait for it to load", Toast.LENGTH_SHORT).show();
-//                    Log.i(TAG, "onCreate: AuthenticationRequest.Builder builder");
-//                    AuthenticationRequest.Builder builder =
-//                            new AuthenticationRequest.Builder(
-//                                    "8245c9c6491c426cbccf670997c14766",
-//                                    AuthenticationResponse.Type.TOKEN,
-//                                    REDIRECT_URL);
-//
-//
-//                    builder.setScopes(new String[]{"user-read-private", "streaming"});
-//                    AuthenticationRequest request = builder.build();
-//
-//                    AuthenticationClient.openLoginActivity(MainActivity.this, REQUEST_CODE, request);
-//                }
+                        Intent intent = new Intent(mContext, NewAlarmActivity.class);
+                        startActivity(intent);
+                        overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_right);
+                    }
+                };
+                thread.run();
             }
         });
     }
@@ -190,7 +233,7 @@ public class MainActivity extends AppCompatActivity implements
 
     //    set initializers
     public void setInitializers() {
-        mAddAlarm = (LinearLayout) findViewById(R.id.alarm_add);
+        mAddAlarm = (FloatingActionButton) findViewById(R.id.alarm_add);
     }
 
 
@@ -233,6 +276,7 @@ public class MainActivity extends AppCompatActivity implements
                 SpotifyApi api = new SpotifyApi();
                 api.setAccessToken(response.getAccessToken());
 
+
                 Log.i(TAG, "onActivityResult: access token" + response.getAccessToken());
                 mAccessToken = response.getAccessToken();
                 mSingleton.setmAuthToken(mAccessToken);
@@ -240,7 +284,27 @@ public class MainActivity extends AppCompatActivity implements
                 queue = Volley.newRequestQueue(mContext);
                 MyTask findPlaylists = new MyTask();
                 findPlaylists.execute();
+                playMusic();
             }
+        }
+    }
+
+    public void playMusic() {
+        if (mSingleton.getmAuthToken() != null && !mSingleton.getmAuthToken().equals("")) {
+            Log.i(TAG, "setToken: 1");
+            mPlayerConfig = new Config(mContext, mSingleton.getmAuthToken(), "8245c9c6491c426cbccf670997c14766");
+            mCurrentPlaylistPlayer = Spotify.getPlayer(mPlayerConfig, this, new SpotifyPlayer.InitializationObserver() {
+                        @Override
+                        public void onInitialized(SpotifyPlayer spotifyPlayer) {
+                            mSingleton.setmCurrentPlaylistPlayer(spotifyPlayer);
+                        }
+
+                        @Override
+                        public void onError(Throwable throwable) {
+                            Log.i(TAG, "AlertDialogActivity: Could not initialize player: " + throwable.getMessage());
+                        }
+                    }
+            );
         }
     }
 
@@ -285,9 +349,6 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onLoggedIn() {
         Log.d("MainActivity", "User logged in");
-        Log.i(TAG, "onLoggedIn: Logged in");
-//
-//        mPlayer.playUri(null, "spotify:track:2TpxZ7JUBn3uw46aR7qd6V", 0, 0);
     }
 
     @Override
@@ -314,9 +375,12 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (mAppUpdater != null) {
+            mAppUpdater.stop();
+        } else {}
         if (queue != null) {
             queue.stop();
-        }
+        } else {}
     }
 }
 

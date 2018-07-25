@@ -4,12 +4,13 @@
     android:id="@+id/activity_spotify_playlist"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/blue1"
     tools:context="com.anders.spotifyalarm.MediaSearch.playlistSearch.SpotifyPlaylistActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/green1"
+        android:background="@color/Transparent"
         android:gravity="center_vertical">
 
         <Button

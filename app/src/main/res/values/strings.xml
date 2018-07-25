@@ -1,22 +1,41 @@
 <resources>
     <string name="app_name">Spotilarm</string>
     <string name="title_activity_main2">Main2Activity</string>
-    <string name="snooze_for_time_message">Snooze Time</string>
-    <string name="set_message">Set Message</string>
-    <string name="set_time">Set Time</string>
-    <string name="set_music">Set Music</string>
+    <string name="snooze_for_time_message">Snooze:</string>
+    <string name="set_alarm_message">Message:</string>
+    <string name="set_music">Music:</string>
+    <string name="set_time">Time:</string>
+    <string name="set_days">Days:</string>
+
     <string name="alarm_page_title">ALARMS</string>
     <string name="playlist"> playlist</string>
     <string name="song_numbers"> songs</string>
     <string name="song_number"> song</string>
 
     <string name="new_alarm">New Alarm</string>
+    <string name="login_out">Login/Out</string>
+
+    <string name="your_settings">Your Settings</string>\
+    <string name="vibrate_on_ring">Vibrate</string>
+    <string name="gradual_wake_up">Gradual Wake Up</string>
+    <string name="gradual_sound_increase">Gradual Wake Time</string>
+    <string name="volume_range">Max Song Volume</string>
+    <string name="percent">%</string>
+
+    <string name="your_current_playlist_text">Current Playlist</string>
+    <string name="unknown_playlist">No Attached Playlist</string>
+    <string name="play_playlist">Play Playlist</string>
 
     <string name="set_title">SET TITLE</string>
-    <string name="to_spotify_playlists">S. Playlists</string>
-    <string name="to_song_search">Find Songs</string>
+    <string name="to_spotify_playlists">Your Spotify playlists</string>
+    <string name="to_hist_song_frag">Playlist history</string>
+    <string name="to_artists">Find an Artist</string>
+    <string name="to_more_playlists">More Spotify  Playlists</string>
+    <string name="to_song_search">Create a new playlist</string>
     <string name="saved_playlists">Saved Playlists</string>
-    <string name="set_title_hint">New Playlist Title</string>
+    <string name="set_title_hint">Name your playlist</string>
+    <string name="local_playlists">Local Playlists</string>
+    <string name="foreign_playlists">Spotify Playlists</string>
 
     <string name="set">Set</string>
     <string name="edit">Edit</string>
@@ -25,14 +44,29 @@
     <string name="stop">Stop</string>
     <string name="snooze">Snooze</string>
 
-    <string name="song_search_title">Create Your Playlist</string>
+    <string name="song_search_title">Create your playlist</string>
     <string name="spotify_playlist_search_title">Your Spotify Playlists</string>
-    <string name="insert_message">Insert message here</string>
+    <string name="insert_message">I am a sample message</string>
     <string name="minutes">minutes</string>
     <string name="minute">minute</string>
     <string name="close_results">Close Results</string>
     <string name="create_playlist">Create a Playlist</string>
+    <string name="search_for_songs">Search for songs</string>
 
+
+    <!-- new alarm activity -->
+
+    <string name="current_playlist">none</string>
+
+    <string name="artist">Artist</string>
+
+    <!-- abbreviations-->
+    <string name="ordinal_abbreviation_th">th</string>
+    <string name="ordinal_abbreviation_rd">rd</string>
+    <string name="ordinal_abbreviation_st">st</string>
+    <string name="ordinal_abbreviation_nd">nd</string>
+
+    <!-- days -->
     <string name="monday_new_alarm">m</string>
     <string name="tuesday_new_alarm">t</string>
     <string name="wednseday_new_alarm">w</string>
@@ -47,4 +81,80 @@
     <string name="friday">Fr</string>
     <string name="saturday">Sa</string>
     <string name="sunday">Su</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Strings related to Settings -->
+
+    <!-- Example General settings -->
+    <string name="pref_header_general">General</string>
+
+    <string name="pref_title_social_recommendations">Enable social recommendations</string>
+    <string name="pref_description_social_recommendations">Recommendations for people to contact
+        based on your message history
+    </string>
+
+    <string name="pref_title_display_name">Display name</string>
+    <string name="pref_default_display_name">John Smith</string>
+
+    <string name="pref_title_add_friends_to_messages">Add friends to messages</string>
+    <string-array name="pref_example_list_titles">
+        <item>Always</item>
+        <item>When possible</item>
+        <item>Never</item>
+    </string-array>
+    <string-array name="pref_example_list_values">
+        <item>1</item>
+        <item>0</item>
+        <item>-1</item>
+    </string-array>
+
+    <!-- Example settings for Data & Sync -->
+    <string name="pref_header_data_sync">Data &amp; sync</string>
+
+    <string name="pref_title_sync_frequency">Sync frequency</string>
+    <string-array name="pref_sync_frequency_titles">
+        <item>15 minutes</item>
+        <item>30 minutes</item>
+        <item>1 hour</item>
+        <item>3 hours</item>
+        <item>6 hours</item>
+        <item>Never</item>
+    </string-array>
+    <string-array name="pref_sync_frequency_values">
+        <item>15</item>
+        <item>30</item>
+        <item>60</item>
+        <item>180</item>
+        <item>360</item>
+        <item>-1</item>
+    </string-array>
+
+    <string-array name="list_preference_entries">
+        <item>Entry 1</item>
+        <item>Entry 2</item>
+        <item>Entry 3</item>
+    </string-array>
+
+    <string-array name="list_preference_entry_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+    <string-array name="multi_select_list_preference_default_value" />
+
+    <string name="pref_title_system_sync_settings">System sync settings</string>
+
+    <!-- Example settings for Notifications -->
+    <string name="pref_header_notifications">Notifications</string>
+
+    <string name="pref_title_new_message_notifications">New message notifications</string>
+
+    <string name="pref_title_ringtone">Ringtone</string>
+    <string name="pref_ringtone_silent">Silent</string>
+
+    <string name="pref_title_vibrate">Vibrate</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

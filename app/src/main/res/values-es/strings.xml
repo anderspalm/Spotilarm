@@ -4,7 +4,7 @@
     <string name="snooze_for_time_message">Tiempo para descansar</string>
     <string name="set_message">Establecer el mensaje</string>
     <string name="set_time">Tiempo</string>
-    <string name="set_music">Musica</string>
+    <string name="set_music">Busca música</string>
     <string name="alarm_page_title">Alarmas</string>
     <string name="playlist"> playlist</string>
     <string name="song_numbers"> Canciónes</string>
@@ -25,26 +25,35 @@
     <string name="minute">minuto</string>
     <string name="close_results">Esconde</string>
     <string name="create_playlist">Crear</string>
+    <string name="search_for_songs">Busca tus canciónes</string>
+
+    <string name="artist">Artista</string>
 
     <string name="set">Átala</string>
     <string name="edit">Editar</string>
     <string name="delete">Destruir</string>
 
 
+    <string name="ordinal_abbreviation_th">.o</string>
+    <string name="ordinal_abbreviation_rd">.o</string>
+    <string name="ordinal_abbreviation_st">.o</string>
+    <string name="ordinal_abbreviation_nd">.o</string>
+
+
     <string name="stop">Para</string>
     <string name="snooze">Dormir</string>
 
-    <string name="monday_new_alarm">l</string>
-    <string name="tuesday_new_alarm">m</string>
-    <string name="wednseday_new_alarm">m</string>
-    <string name="thursday_new_alarm">j</string>
-    <string name="friday_new_alarm">v</string>
-    <string name="saturday_new_alarm">s</string>
-    <string name="sunday_new_alarm">d</string>
+    <string name="monday_new_alarm">L</string>
+    <string name="tuesday_new_alarm">M</string>
+    <string name="wednseday_new_alarm">M</string>
+    <string name="thursday_new_alarm">J</string>
+    <string name="friday_new_alarm">V</string>
+    <string name="saturday_new_alarm">S</string>
+    <string name="sunday_new_alarm">D</string>
     <string name="monday">Lu</string>
     <string name="tuesday">Ma</string>
     <string name="wednseday">Mi</string>
-    <string name="thursday">ju</string>
+    <string name="thursday">Ju</string>
     <string name="friday">Vi</string>
     <string name="saturday">Sa</string>
     <string name="sunday">Do</string>

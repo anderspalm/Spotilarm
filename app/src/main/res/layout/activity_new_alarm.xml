@@ -4,452 +4,495 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grey"
     android:orientation="vertical">
 
-    <RelativeLayout
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <RelativeLayout
-            android:id="@+id/relativeLayout"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/green1">
+            android:layout_height="wrap_content"
+            android:background="@color/blue1">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/back_button"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginLeft="5pt"
-                    android:background="@drawable/back" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="9dp"
-                android:gravity="center">
+            <RelativeLayout
+                android:id="@+id/relativeLayout"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/black"
+                android:alpha=".9">
 
                 <LinearLayout
-                    android:id="@+id/set_time_button"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_height="match_parent"
                     android:gravity="center"
                     android:orientation="horizontal">
 
                     <Button
+                        android:id="@+id/back_button"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:layout_margin="9dp"
-                        android:background="@drawable/alarm_clock_white"
-                        android:fontFamily="monospace"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/normal"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:alpha=".9"
-                        android:fontFamily="casual"
-                        android:gravity="center"
-                        android:text="@string/set_time"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/large"
-                        android:textStyle="bold" />
-
+                        android:layout_marginStart="9dp"
+                        android:background="@drawable/back" />
                 </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/chooseSong"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:orientation="horizontal">
 
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_margin="4.5dp"
-                        android:background="@drawable/musical_note"
-                        android:elevation="4dp"/>
+                <Button
+                    android:id="@+id/set_alarm_1"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="9dp"
+                    android:background="@drawable/tick_done_white"
+                    android:fontFamily="monospace"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/extraLarge"
+                    android:textStyle="bold" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:alpha=".9"
-                        android:fontFamily="casual"
-                        android:gravity="center"
-                        android:text="@string/set_music"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/large"
-                        android:textStyle="bold" />
-                </LinearLayout>
+            </RelativeLayout>
 
-            </LinearLayout>
         </RelativeLayout>
 
-        <!--<ScrollView-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_alignParentStart="true"-->
-        <!--android:layout_below="@+id/relativeLayout"-->
-        <!--android:orientation="vertical">-->
-
-
-        <FrameLayout
-            android:id="@+id/frameLayout"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:layout_marginTop="?attr/actionBarSize"
-                android:background="@color/green1" />
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:background="@color/blue1"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_marginTop="?attr/actionBarSize"
+                android:layout_marginLeft="5pt"
+                android:layout_marginRight="5pt"
                 android:orientation="vertical">
 
-
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-                    <LinearLayout
+                    <ScrollView
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentTop="true"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginLeft="5pt"
-                        android:layout_marginRight="5pt"
-                        android:gravity="top"
-                        android:orientation="vertical">
+                        android:layout_height="match_parent">
 
                         <LinearLayout
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/media_recycler_view_background"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:layout_gravity="center_vertical">
 
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="4.5pt">
+                            <!--<TextView-->
+                                <!--android:layout_width="match_parent"-->
+                                <!--android:layout_height="wrap_content"-->
+                                <!--android:text="@string/set_days"-->
+                                <!--android:fontFamily="monospace"-->
+                                <!--android:textColor="@color/white"-->
+                                <!--android:textSize="@dimen/normal"-->
+                                <!--android:textStyle="bold" />-->
 
-                                <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_centerInParent="true"
-                                    android:gravity="center_horizontal"
-                                    android:orientation="horizontal">
-
-                                    <Button
-                                        android:id="@+id/monday"
-                                        android:layout_width="0px"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginLeft="1pt"
-                                        android:layout_marginRight="1pt"
-                                        android:layout_weight="0.1428"
-                                        android:background="#00000000"
-                                        android:padding="20px"
-                                        android:text="M"
-                                        android:textColor="@color/green1"
-                                        android:textSize="@dimen/normal" />
-
-
-                                    <TextView
-                                        android:layout_width="1pt"
-                                        android:layout_height="match_parent"
-                                        android:layout_marginBottom="5pt"
-                                        android:layout_marginTop="5pt"
-                                        android:background="@color/green1" />
-
-                                    <Button
-                                        android:id="@+id/tuesday"
-                                        android:layout_width="0px"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginLeft="1pt"
-                                        android:layout_marginRight="1pt"
-                                        android:layout_weight="0.1428"
-                                        android:background="#00000000"
-                                        android:padding="20px"
-                                        android:text="T"
-                                        android:textColor="@color/green1"
-                                        android:textSize="@dimen/normal" />
-
-
-                                    <TextView
-                                        android:layout_width="1pt"
-                                        android:layout_height="match_parent"
-                                        android:layout_marginBottom="5pt"
-                                        android:layout_marginTop="5pt"
-                                        android:background="@color/green1" />
-
-                                    <Button
-                                        android:id="@+id/wednesday"
-                                        android:layout_width="0px"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginLeft="1pt"
-                                        android:layout_marginRight="1pt"
-                                        android:layout_weight="0.1428"
-                                        android:background="#00000000"
-                                        android:padding="20px"
-                                        android:text="W"
-                                        android:textColor="@color/green1"
-                                        android:textSize="@dimen/normal" />
-
-
-                                    <TextView
-                                        android:layout_width="1pt"
-                                        android:layout_height="match_parent"
-                                        android:layout_marginBottom="5pt"
-                                        android:layout_marginTop="5pt"
-                                        android:background="@color/green1" />
-
-                                    <Button
-                                        android:id="@+id/thursday"
-                                        android:layout_width="0px"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginLeft="1pt"
-                                        android:layout_marginRight="1pt"
-                                        android:layout_weight="0.1428"
-                                        android:background="#00000000"
-                                        android:padding="20px"
-                                        android:text="T"
-                                        android:textColor="@color/green1"
-                                        android:textSize="@dimen/normal" />
-
-
-                                    <TextView
-                                        android:layout_width="1pt"
-                                        android:layout_height="match_parent"
-                                        android:layout_marginBottom="5pt"
-                                        android:layout_marginTop="5pt"
-                                        android:background="@color/green1" />
-
-                                    <Button
-                                        android:id="@+id/friday"
-                                        android:layout_width="0px"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginLeft="1pt"
-                                        android:layout_marginRight="1pt"
-                                        android:layout_weight="0.1428"
-                                        android:background="#00000000"
-                                        android:padding="20px"
-                                        android:text="F"
-                                        android:textColor="@color/green1"
-                                        android:textSize="@dimen/normal" />
-
-
-                                    <TextView
-                                        android:layout_width="1pt"
-                                        android:layout_height="match_parent"
-                                        android:layout_marginBottom="5pt"
-                                        android:layout_marginTop="5pt"
-                                        android:background="@color/green1" />
-
-                                    <Button
-                                        android:id="@+id/saturday"
-                                        android:layout_width="0px"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginLeft="1pt"
-                                        android:layout_marginRight="1pt"
-                                        android:layout_weight="0.1428"
-                                        android:background="#00000000"
-                                        android:padding="20px"
-                                        android:text="S"
-                                        android:textColor="@color/green1"
-                                        android:textSize="@dimen/normal" />
-
-                                    <TextView
-                                        android:layout_width="1pt"
-                                        android:layout_height="match_parent"
-                                        android:layout_marginBottom="5pt"
-                                        android:layout_marginTop="5pt"
-                                        android:background="@color/green1" />
-
-                                    <Button
-                                        android:id="@+id/sunday"
-                                        android:layout_width="0px"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginLeft="1pt"
-                                        android:layout_marginRight="1pt"
-                                        android:layout_weight="0.1428"
-                                        android:background="#00000000"
-                                        android:padding="20px"
-                                        android:text="S"
-                                        android:textColor="@color/green1"
-                                        android:textSize="@dimen/normal" />
-
-                                </LinearLayout>
-                            </RelativeLayout>
-                        </LinearLayout>
-
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="27dp"
-                            android:background="@drawable/media_recycler_view_background"
-                            android:orientation="vertical">
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="4.5dp"
-                                android:layout_marginTop="9dp"
-                                android:gravity="center">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_marginLeft="9dp"
-                                    android:fontFamily="casual"
-                                    android:text="@string/snooze_for_time_message"
-                                    android:textColor="@color/blue1"
-                                    android:textSize="@dimen/normal"
-                                    android:textStyle="bold" />
-
-                                <TextView
-                                    android:id="@+id/seek_bar_time"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginRight="4.5dp"
-                                    android:fontFamily="casual"
-                                    android:paddingLeft="9dp"
-                                    android:text="0"
-                                    android:textColor="@color/green1"
-                                    android:textSize="@dimen/large"
-                                    android:textStyle="bold" />
-
-                                <TextView
-                                    android:id="@+id/minutes"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginRight="4.5dp"
-                                    android:fontFamily="casual"
-                                    android:text="@string/minutes"
-                                    android:textColor="@color/green1"
-                                    android:textSize="@dimen/normal"
-                                    android:textStyle="bold" />
-
-                            </LinearLayout>
-
-                            <SeekBar
-                                android:id="@+id/snooze_seek_bar"
-                                android:layout_width="match_parent"
-                                android:layout_height="60dp"
-                                android:max="90" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="27dp"
-                            android:layout_marginTop="27dp"
-                            android:background="@drawable/media_recycler_view_background"
-                            android:orientation="vertical">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_marginBottom="9dp"
                                 android:orientation="vertical">
 
                                 <RelativeLayout
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:orientation="horizontal">
+                                    android:layout_height="wrap_content">
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_centerInParent="true"
+                                        android:layout_marginBottom="9dp"
+                                        android:layout_marginTop="9dp"
+                                        android:gravity="center_horizontal"
+                                        android:orientation="horizontal">
+
+                                        <Button
+                                            android:id="@+id/monday"
+                                            android:layout_width="0px"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginLeft="1pt"
+                                            android:layout_marginRight="1pt"
+                                            android:layout_weight="0.1428"
+                                            android:background="#00000000"
+                                            android:padding="20px"
+                                            android:text="@string/monday_new_alarm"
+                                            android:textColor="@color/grey"
+                                            android:textSize="@dimen/large" />
+
+
+                                        <TextView
+                                            android:layout_width="1pt"
+                                            android:layout_height="match_parent"
+                                            android:layout_marginBottom="5pt"
+                                            android:layout_marginTop="5pt"
+                                            android:background="@color/greyTransparent" />
+
+                                        <Button
+                                            android:id="@+id/tuesday"
+                                            android:layout_width="0px"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginLeft="1pt"
+                                            android:layout_marginRight="1pt"
+                                            android:layout_weight="0.1428"
+                                            android:background="#00000000"
+                                            android:padding="20px"
+                                            android:text="@string/tuesday_new_alarm"
+                                            android:textColor="@color/grey"
+                                            android:textSize="@dimen/large" />
+
+
+                                        <TextView
+                                            android:layout_width="1pt"
+                                            android:layout_height="match_parent"
+                                            android:layout_marginBottom="5pt"
+                                            android:layout_marginTop="5pt"
+                                            android:background="@color/greyTransparent" />
+
+                                        <Button
+                                            android:id="@+id/wednesday"
+                                            android:layout_width="0px"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginLeft="1pt"
+                                            android:layout_marginRight="1pt"
+                                            android:layout_weight="0.1428"
+                                            android:background="#00000000"
+                                            android:padding="20px"
+                                            android:text="@string/wednseday_new_alarm"
+                                            android:textColor="@color/grey"
+                                            android:textSize="@dimen/large" />
+
+
+                                        <TextView
+                                            android:layout_width="1pt"
+                                            android:layout_height="match_parent"
+                                            android:layout_marginBottom="5pt"
+                                            android:layout_marginTop="5pt"
+                                            android:background="@color/greyTransparent" />
+
+                                        <Button
+                                            android:id="@+id/thursday"
+                                            android:layout_width="0px"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginLeft="1pt"
+                                            android:layout_marginRight="1pt"
+                                            android:layout_weight="0.1428"
+                                            android:background="#00000000"
+                                            android:padding="20px"
+                                            android:text="@string/thursday_new_alarm"
+                                            android:textColor="@color/grey"
+                                            android:textSize="@dimen/large" />
+
+
+                                        <TextView
+                                            android:layout_width="1pt"
+                                            android:layout_height="match_parent"
+                                            android:layout_marginBottom="5pt"
+                                            android:layout_marginTop="5pt"
+                                            android:background="@color/greyTransparent" />
+
+                                        <Button
+                                            android:id="@+id/friday"
+                                            android:layout_width="0px"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginLeft="1pt"
+                                            android:layout_marginRight="1pt"
+                                            android:layout_weight="0.1428"
+                                            android:background="#00000000"
+                                            android:padding="20px"
+                                            android:text="@string/friday_new_alarm"
+                                            android:textColor="@color/grey"
+                                            android:textSize="@dimen/large" />
+
+
+                                        <TextView
+                                            android:layout_width="1pt"
+                                            android:layout_height="match_parent"
+                                            android:layout_marginBottom="5pt"
+                                            android:layout_marginTop="5pt"
+                                            android:background="@color/greyTransparent" />
+
+                                        <Button
+                                            android:id="@+id/saturday"
+                                            android:layout_width="0px"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginLeft="1pt"
+                                            android:layout_marginRight="1pt"
+                                            android:layout_weight="0.1428"
+                                            android:background="#00000000"
+                                            android:padding="20px"
+                                            android:text="@string/saturday_new_alarm"
+                                            android:textColor="@color/grey"
+                                            android:textSize="@dimen/large" />
+
+                                        <TextView
+                                            android:layout_width="1pt"
+                                            android:layout_height="match_parent"
+                                            android:layout_marginBottom="5pt"
+                                            android:layout_marginTop="5pt"
+                                            android:background="@color/greyTransparent" />
+
+                                        <Button
+                                            android:id="@+id/sunday"
+                                            android:layout_width="0px"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginLeft="1pt"
+                                            android:layout_marginRight="1pt"
+                                            android:layout_weight="0.1428"
+                                            android:background="#00000000"
+                                            android:padding="20px"
+                                            android:text="@string/sunday_new_alarm"
+                                            android:textColor="@color/grey"
+                                            android:textSize="@dimen/large" />
+
+                                    </LinearLayout>
+                                </RelativeLayout>
+                            </LinearLayout>
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="2dp"
+                                    android:layout_marginBottom="13.5dp"
+                                    android:background="@color/greyTransparent" />
+
+
+                                <FrameLayout
+                                    android:id="@+id/choose_time"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="start"
+                                    android:gravity="start"
+                                    android:orientation="vertical">
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:orientation="vertical">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:alpha=".9"
+                                            android:text="@string/set_time"
+                                            android:fontFamily="monospace"
+                                            android:textColor="@color/white"
+                                            android:textSize="@dimen/normal"
+                                            android:textStyle="bold" />
+
+                                        <TextView
+                                            android:id="@+id/current_time"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:text="00:00"
+                                            android:textColor="@color/white"
+                                            android:textSize="@dimen/normal" />
+                                    </LinearLayout>
+
+                                    <ImageView
+                                        android:layout_width="40dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="end|center_vertical"
+                                        android:src="@drawable/right_arrow_light_green" />
+                                </FrameLayout>
+
+                            </LinearLayout>
+
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="2dp"
+                                android:layout_marginTop="13.5dp"
+                                android:layout_marginBottom="13.5dp"
+                                android:background="@color/greyTransparent" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+
+                                <FrameLayout
+                                    android:id="@+id/chooseSong"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="start"
+                                    android:gravity="start"
+                                    android:orientation="vertical">
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:orientation="vertical">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:alpha=".9"
+                                            android:text="@string/set_music"
+                                            android:fontFamily="monospace"
+                                            android:textColor="@color/white"
+                                            android:textSize="@dimen/normal"
+                                            android:textStyle="bold" />
+
+                                        <TextView
+                                            android:id="@+id/current_playlist"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:text="@string/current_playlist"
+                                            android:textColor="@color/white"
+                                            android:textSize="@dimen/normal" />
+                                    </LinearLayout>
+
+                                    <ImageView
+                                        android:layout_width="40dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="end|center_vertical"
+                                        android:src="@drawable/right_arrow_light_green" />
+                                </FrameLayout>
+
+                            </LinearLayout>
+
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="2dp"
+                                android:layout_marginTop="9dp"
+                                android:background="@color/greyTransparent" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="13.5dp"
+                                android:layout_marginTop="13.5dp"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:orientation="vertical">
 
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:layout_marginTop="9dp"
+                                        android:layout_gravity="center"
+                                        android:text="@string/snooze_for_time_message"
                                         android:fontFamily="monospace"
-                                        android:padding="5dp"
-                                        android:text="Message:"
                                         android:textColor="@color/white"
                                         android:textSize="@dimen/normal"
                                         android:textStyle="bold" />
 
-                                    <TextView
-                                        android:id="@+id/message_tv"
-                                        android:layout_width="1px"
-                                        android:layout_height="1px"
-                                        android:padding="4.5dp"
-                                        android:textColor="@color/orange"
-                                        android:textSize="@dimen/normal" />
-
-                                    <TextView
-                                        android:id="@+id/set_message"
-                                        android:layout_width="wrap_content"
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:layout_alignParentLeft="true"
-                                        android:layout_centerVertical="true"
-                                        android:layout_marginLeft="9dp"
-                                        android:fontFamily="casual"
-                                        android:text="@string/set_message"
-                                        android:textColor="@color/blue1"
-                                        android:textSize="@dimen/normal"
-                                        android:textStyle="bold" />
-                                </RelativeLayout>
+                                        android:layout_gravity="start">
 
+                                        <TextView
+                                            android:id="@+id/seek_bar_time"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginRight="9dp"
+                                            android:text="0"
+                                            android:textColor="@color/blue2"
+                                            android:textSize="@dimen/large"
+                                            android:textStyle="bold" />
+
+                                        <TextView
+                                            android:id="@+id/minutes"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="@string/minutes"
+                                            android:textColor="@color/white"
+                                            android:textSize="@dimen/normal" />
+                                    </LinearLayout>
+
+                                </LinearLayout>
+
+                                <SeekBar
+                                    android:id="@+id/snooze_seek_bar"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="50dp"
+                                    android:forceHasOverlappingRendering="true"
+                                    android:max="90" />
+
+                            </LinearLayout>
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="2dp"
+                                android:background="@color/greyTransparent" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="13.5dp"
+                                android:orientation="vertical">
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical">
+                                    <RelativeLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:orientation="horizontal">
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginTop="9dp"
+                                            android:fontFamily="monospace"
+                                            android:padding="5dp"
+                                            android:text="@string/set_alarm_message"
+                                            android:textColor="@color/white"
+                                            android:textSize="@dimen/normal"
+                                            android:textStyle="bold" />
+
+                                        <TextView
+                                            android:id="@+id/message_tv"
+                                            android:layout_width="1px"
+                                            android:layout_height="1px"
+                                            android:padding="4.5dp"
+                                            android:textColor="@color/orange"
+                                            android:textSize="@dimen/normal" />
+                                    </RelativeLayout>
+                                </LinearLayout>
                             </LinearLayout>
 
                             <EditText
                                 android:id="@+id/message_et"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="serif"
+                                android:layout_height="match_parent"
+                                android:fontFamily="casual"
                                 android:gravity="start"
                                 android:hint="@string/insert_message"
-                                android:minHeight="175dp"
-                                android:padding="9dp"
+                                android:minLines="3"
                                 android:textAlignment="textStart"
-                                android:textColor="@color/blue1"
-                                android:textColorHint="@color/grey"
+                                android:textColor="@color/accent1"
+                                android:textColorHint="@color/white"
                                 android:textSize="@dimen/large" />
+
                         </LinearLayout>
-                    </LinearLayout>
-                </RelativeLayout>
+                    </ScrollView>
+                </LinearLayout>
             </LinearLayout>
-        </FrameLayout>
-
-
-        <android.support.v7.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_margin="@dimen/fab_margin"
-            android:visibility="visible"
-            app:cardCornerRadius="30dp">
-
-            <Button
-                android:id="@+id/set_alarm_1"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:background="@drawable/accept" />
-        </android.support.v7.widget.CardView>
-    </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
 
 
     <FrameLayout
@@ -457,68 +500,81 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
-        android:background="@color/colorPrimaryLightTransparent"
+        android:background="@drawable/grey_to_transparent"
+        android:elevation="2dp"
         android:visibility="gone">
+
+        <!--<RelativeLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="?attr/actionBarSize"-->
+        <!--android:background="@color/blue1">-->
+
+        <!--<LinearLayout-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:gravity="center"-->
+        <!--android:orientation="horizontal">-->
+
+        <!--<Button-->
+        <!--android:id="@+id/time_back_button"-->
+        <!--android:layout_width="30dp"-->
+        <!--android:layout_height="30dp"-->
+        <!--android:layout_marginLeft="5pt"-->
+        <!--android:background="@drawable/back" />-->
+        <!--</LinearLayout>-->
+
+        <!--</RelativeLayout>-->
+
+        <!--<RelativeLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:gravity="bottom"-->
+        <!--android:layout_gravity="bottom"-->
+        <!--android:layout_height="wrap_content">-->
+
+        <!--<FrameLayout-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_centerInParent="true"-->
+        <!--android:layout_marginLeft="9dp"-->
+        <!--android:layout_marginRight="9dp">-->
+
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@color/blue2"
+            android:gravity="bottom"
+            android:orientation="vertical"
+            android:padding="9dp">
 
-            <FrameLayout
-                android:layout_width="wrap_content"
+            <TimePicker
+                android:id="@+id/time_picker"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_marginLeft="9dp"
-                android:layout_marginRight="9dp">
+                android:elevation="1dp"
+                android:numbersInnerTextColor="@color/white"
+                android:headerBackground="@color/Transparent"
+                android:numbersBackgroundColor="@color/blue1"
+                android:numbersSelectorColor="@color/listGreen"
+                android:numbersTextColor="@color/white"
+                android:timePickerMode="clock" />
 
-
-                <android.support.v7.widget.CardView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    app:cardCornerRadius="30dp">
-
-                    <Button
-                        android:id="@+id/accept"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:background="@drawable/accept" />
-
-                </android.support.v7.widget.CardView>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="27dp"
-                    android:background="@drawable/time_popup_background"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="9dp">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-
-                        <TimePicker
-                            android:id="@+id/time_picker"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:headerAmPmTextAppearance="@color/green1"
-                            android:headerBackground="@color/green1"
-                            android:headerTimeTextAppearance="@color/green1"
-                            android:numbersInnerTextColor="@color/green1"
-                            android:numbersSelectorColor="@color/listGreen"
-                            android:numbersTextColor="@color/green1"
-                            android:paddingBottom="36dp"
-                            android:timePickerMode="clock" />
-
-                    </RelativeLayout>
-                </RelativeLayout>
-
-            </FrameLayout>
-
+            <Button
+                android:id="@+id/time_back_button"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/time_picker"
+                android:layout_marginEnd="9dp"
+                android:textColor="@color/green1"
+                android:fontFamily="monospace"
+                android:textSize="@dimen/normal"
+                android:background="@color/Transparent"
+                android:text="Back" />
         </RelativeLayout>
+        <!--</FrameLayout>-->
+        <!--</RelativeLayout>-->
     </FrameLayout>
 
     <FrameLayout

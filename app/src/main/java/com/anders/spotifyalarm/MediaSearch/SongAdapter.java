@@ -1,6 +1,5 @@
 package com.anders.spotifyalarm.MediaSearch;
 
-import android.content.ClipData;
 import android.content.Context;
 import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
@@ -9,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.anders.spotifyalarm.MediaSearch.songSearch.SongObject;
@@ -23,16 +21,12 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
-import java.util.zip.Inflater;
-
-import static android.content.ContentValues.TAG;
 
 /**
  * Created by anders on 2/17/2017.
  */
 
-public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder> implements SwipeInterface{
+public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder> implements SwipeInterface {
 
     private static final String TAG = "SongAdapter";
     ArrayList<SongObject> mItems;
@@ -98,11 +92,11 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
 
     @Override
     public boolean onItemMove(int fromPosition, int toPosition) {
-        Collections.swap(mItems,fromPosition,toPosition);
-        for (int i = 0; i < mItems.size(); i ++){
+        Collections.swap(mItems, fromPosition, toPosition);
+        for (int i = 0; i < mItems.size(); i++) {
             Log.i(TAG, "onItemMove: " + mItems.get(i).getTitle());
         }
-        notifyItemMoved(fromPosition,toPosition);
+        notifyItemMoved(fromPosition, toPosition);
         return true;
     }
 
@@ -124,7 +118,7 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
     }
 
     public void updateList(ArrayList<SongObject> arrayList) {
-        Log.i(TAG, "updateList: ");
+        Log.i(TAG, "updateList: " + arrayList.size());
         mMasterSingleton.setSongObjectArray(arrayList);
 
         Handler handler = new Handler();
@@ -136,20 +130,18 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
             }
         };
         handler.post(r);
+
     }
 
-    public String returnOrdinal(int i){
-        String[] sufixes = new String[] { "th", "st", "nd", "rd", "th", "th", "th", "th", "th", "th" };
-        switch (i % 100) {
-            case 1:
-                return "st";
-            case 11:
-            case 12:
-            case 13:
-                return "th";
-            default:
-                return sufixes[i % 10];
-
-        }
+    public String returnOrdinal(int i) {
+        String th = mContext.getResources().getString(R.string.ordinal_abbreviation_th);
+        String st = mContext.getResources().getString(R.string.ordinal_abbreviation_st);
+        String nd = mContext.getResources().getString(R.string.ordinal_abbreviation_nd);
+        String rd = mContext.getResources().getString(R.string.ordinal_abbreviation_rd);
+        String[] sufixes = new String[]{th, st, nd, rd, th, th, th, th, th, th};
+        int num = i;
+        num = (num % 10);
+        Log.i(TAG, "returnOrdinal: " + i + " " + sufixes[num]);
+        return sufixes[num];
     }
 }

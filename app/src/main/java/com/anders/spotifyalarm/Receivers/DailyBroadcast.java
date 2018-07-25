@@ -21,19 +21,70 @@ import static android.content.ContentValues.TAG;
  */
 
 public class DailyBroadcast extends BroadcastReceiver {
+
+    DBhelper mDB;
+
     @Override
     public void onReceive(Context context, Intent intent) {
         DBhelper dBhelper = DBhelper.getmInstance(context);
         AlarmBroadcastReceiver mReceiver = new AlarmBroadcastReceiver();
-        int day = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
+        int dayofWeek = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
         Log.i(TAG, "onReceive: time = " +  Calendar.getInstance().getTime());
-        ArrayList<AlarmObject> array = dBhelper.findDailyAlarms(day);
+        ArrayList<AlarmObject> array = dBhelper.findDailyAlarms(dayofWeek);
+
+        mDB = DBhelper.getmInstance(context);
+        String grad = mDB.getGradualWakeup();
+        String num = grad.substring(3,4);
+        int minPadding = Integer.parseInt(num);
+
         for (int i = 0 ; i < array.size(); i ++) {
-            mReceiver.setAlarm(context,
-                    array.get(i).getmDay(), array.get(i).getmHour(),
-                    array.get(i).getmMinute(), array.get(i).getmIndex(),
-                    array.get(i).getmAlarmId(), array.get(i).getmSnooze(),
-                    array.get(i).getmMessage());
+            Log.i(TAG, "onReceive: grad.substring(0,3grad.substring(0,3grad.substring(0,3grad.substr" +
+                    "ing(0,3grad.substring(0,3grad.substring(0,3grad.substring(0,3" + grad.substring(0,3));
+            if (grad.substring(0,3).equals("oui")) {
+                mReceiver.setAlarm(context,
+                        array.get(i).getmDay(), array.get(i).getmHour(),
+                        array.get(i).getmMinute(), array.get(i).getmIndex(),
+                        array.get(i).getmAlarmId(), array.get(i).getmSnooze(),
+                        array.get(i).getmMessage());
+            } else {
+
+                int minOriginal = array.get(i).getmMinute();
+                int hour = array.get(i).getmHour();
+                int day = array.get(i).getmDay();
+
+                if (minOriginal < minPadding){
+                    minOriginal = (minOriginal - minPadding) + 60;
+                    if (hour == 0){
+                        hour = 23;
+                        if (day == 1) {
+                            day = 7;
+                        } else {
+                            day = day - 1;
+                        }
+                    } else {
+                        hour = hour - 1;
+                    }
+                } else if(minOriginal > (60 - minPadding)){
+                    minOriginal = (minOriginal + minPadding) - 60;
+                    if (hour == 23 ){
+                        hour = 1;
+                        if (day == 7) {
+                            day = 1;
+                        } else {
+                            day = day + 1;
+                        }
+                    } else {
+                        hour = hour + 1;
+                    }
+                } else {
+                    minOriginal = minOriginal - minPadding;
+                }
+
+                mReceiver.setAlarm(context,
+                        day, hour, minOriginal, array.get(i).getmIndex(),
+                        array.get(i).getmAlarmId(), array.get(i).getmSnooze(),
+                        array.get(i).getmMessage());
+            }
         }
 
     }

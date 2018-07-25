@@ -41,10 +41,13 @@ public class AlbumSearchFragment extends Fragment implements AlbumSearch.View{
     static int mAlarmId;
     MasterSingleton mSingleton;
 
-    public static Fragment newInstance(Bundle bundle, FrameLayout layout, String token, int alarm_id){
-        SearchFragment fragment = new SearchFragment();
+    public AlbumSearchFragment(){
+
+    }
+
+    public static AlbumSearchFragment getInstance(Bundle bundle, FrameLayout layout, String token, int alarm_id){
+        AlbumSearchFragment fragment = new AlbumSearchFragment();
         EXTRA_TOKEN = token;
-        fragment.setArguments(bundle);
         mAlarmId = alarm_id;
         mFrameLayout = layout;
         return fragment;

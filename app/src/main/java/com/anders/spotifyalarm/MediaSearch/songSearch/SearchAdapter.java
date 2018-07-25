@@ -11,13 +11,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.anders.spotifyalarm.SingAndDB.DBhelper;
 import com.anders.spotifyalarm.SingAndDB.MasterSingleton;
 import com.anders.spotifyalarm.UiAids.PhotoTransformation;
 import com.anders.spotifyalarm.R;
+import com.andexert.library.RippleView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -27,46 +27,42 @@ import kaaes.spotify.webapi.android.models.Track;
 
 import static android.content.ContentValues.TAG;
 
-public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder> {
+public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchViewHolder> {
 
-    private final List<Track> mItems = new ArrayList<>();
-    private final Context mContext;
-    private final ItemSelectedListener mListener;
-    ArrayList<Integer> check;
-    private int mAlarmId;
+    private List<Track> mItems = new ArrayList<>();
+    private Context mContext;
+    private PlaySearchListener mListener;
     DBhelper mDBhelper;
     MasterSingleton mSingleton;
     Track mCurrentTrack;
 
 
-    public SearchAdapter(Context context, MasterSingleton singleton, DBhelper db, int alarm_id, ItemSelectedListener listener) {
+    public SearchAdapter(Context context, MasterSingleton singleton, DBhelper db, int alarm_id, PlaySearchListener listener) {
         mContext = context;
         mSingleton = singleton;
         mListener = listener;
-        mAlarmId = alarm_id;
+        mItems = new ArrayList<>();
         mDBhelper = db;
-        check = new ArrayList<>();
-        for (int i = 0; i < mItems.size(); i++) {
-            check.add(0);
-        }
-    }
-
-
-
-    @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
-        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public SearchViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(mContext).inflate(R.layout.list_item, parent, false);
+        SearchViewHolder svh = new SearchViewHolder(view);
+        Log.i(TAG, "search: onCreateViewHolder: ");
+        return svh;
+    }
 
+    @Override
+    public void onBindViewHolder(SearchViewHolder holder, int position) {
+
+        Log.i(TAG, "search: onBindViewHolder " + mItems.size());
         mCurrentTrack = mItems.get(position);
 
         holder.title.setText(mCurrentTrack.name);
         holder.subtitle.setText(mCurrentTrack.artists.get(0).name);
 
+        Log.i(TAG, "onBindViewHolder: album name " + mCurrentTrack.album.name);
         String url = mCurrentTrack.album.images.get(0).url;
         Picasso.with(mContext).load(url)
                 .centerCrop()
@@ -76,28 +72,39 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
     }
 
 
+    public void clearData() {
+        mItems.clear();
+    }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener {
+    public void addData(List<Track> items) {
+        clearData();
+        mItems.addAll(items);
+        notifyDataSetChanged();
+        Log.i(TAG, "addData: in search adapter " + mItems.size() );
+    }
+
+    public class SearchViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public TextView title;
         public TextView subtitle;
         public ImageView mAlbum_photo, mAddRemove;
-        LinearLayout mLayout;
+        RippleView mLayout;
 
         //        public final ImageView image;
-        public ViewHolder(View itemView) {
+        public SearchViewHolder(View itemView) {
             super(itemView);
+
             title = (TextView) itemView.findViewById(R.id.title);
             subtitle = (TextView) itemView.findViewById(R.id.subtitle);
-            mLayout = (LinearLayout) itemView.findViewById(R.id.layout);
+            mLayout = (RippleView) itemView.findViewById(R.id.layout);
             mAlbum_photo = (ImageView) itemView.findViewById(R.id.album_photo);
             mAddRemove = (ImageView) itemView.findViewById(R.id.addRemovebutton);
             mLayout.setClickable(true);
-            itemView.setOnLongClickListener(this);
+            itemView.setOnClickListener(this);
         }
 
         @Override
-        public boolean onLongClick(View view) {
+        public void onClick(View view) {
             notifyItemChanged(getLayoutPosition());
             Log.i(TAG, "onClick: ViewHolder " + getAdapterPosition());
             Track currentTrack = mItems.get(getAdapterPosition());
@@ -111,38 +118,20 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
 
             Log.i(TAG, "onLongClick:  mSingleton.getSong_uri_string().size() " + mSingleton.getSongObjArray().size());
             mListener.onItemSelected(view, mItems.get(getAdapterPosition()), songObj);
-            return false;
         }
     }
 
-    public interface ItemSelectedListener {
+    public interface PlaySearchListener {
         void onItemSelected(View itemView, Track item, SongObject object);
     }
 
     @Override
     public int getItemCount() {
-        check = new ArrayList<>();
-        for (int j = 0; j < mItems.size(); j++) {
-            check.add(0);
-        }
 
         if (mItems != null && mItems.size() > 0) {
             return mItems.size();
         } else {
             return 0;
-        }
-    }
-
-    public void clearData() {
-        mItems.clear();
-    }
-
-    public void addData(List<Track> items) {
-        mItems.addAll(items);
-        notifyDataSetChanged();
-        check = new ArrayList<>();
-        for (int i = 0; i < mItems.size(); i++) {
-            check.add(0);
         }
     }
 }
